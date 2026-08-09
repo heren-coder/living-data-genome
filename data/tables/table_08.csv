@@ -1,0 +1,22 @@
+"# Table 8. Federated agreement, cryptographic lineage, and ledger cost at the reference operating point."
+,RLV,Healthcare
+"Federated agreement (four nodes, 150 shared candidates, 5 percent relative calibration variance)",,
+Agreement coefficient,0.879 ± 0.041,0.877 ± 0.061
+Unanimous agreement rate,0.928 ± 0.022,0.920 ± 0.039
+Mean admissible rate across nodes,0.795,0.778
+Boundary at which the estimate ceases to be stable,16.3%,17.0%
+Permissioned Merkle ledger (illustrative six-event lifecycle),,
+Chain valid before and after tamper,"true / false, detected at block 3",
+Merkle root changed by tamper,true,
+"Quorum required (four nodes, one tolerated fault)",three of four,
+Commit with four honest attestations,committed,
+Commit with one Byzantine node,committed,
+Commit with two faulty nodes,rejected,
+"Ledger cost at 6 / 1,024 / 262,144 events",,
+"Signed event record, mean size",411 B,
+Merkle depth,3 / 10 / 18,
+Inclusion proof size,96 / 320 / 576 B,
+Append one event,under 20 µs at every scale,
+Inclusion proof verification,under 20 µs at every scale,
+Batch rebuild of the whole tree,under 1 s,
+Full chain verification,under 1 s,

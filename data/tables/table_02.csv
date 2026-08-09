@@ -1,0 +1,6 @@
+"# Table 2. What each layer means in the running testbed, the method family that instantiates it, and the reliability component measured there."
+Layer,Post-incident RLV meaning,Method family in Section 3,Reliability component measured here
+"L1, generation",partial traces induce several feasible incident accounts; revisions stay local,"scenario-conditioned sampling, bounded generation","transition stability, at each governed revision"
+"L2, representation",gene proxies are refined and implausible accounts are filtered,"encoding with a context-conditioned low-rank correction, consistency filtering","admissibility survival, once the constraint regime is enforced"
+"L3, externalization",only admissible accounts become institution-facing artifacts,counterfactual release probing with an exact Shapley cross-check,"triadic alignment, at the boundary"
+"L4, governance","released evidence is reviewed, contested, revoked and regenerated without erasure","lineage, certification, revocation, regeneration","governance coherence, after release under contestation"

@@ -1,0 +1,9 @@
+"# Table 13. The aggregate under seven weightings, with coherence idealized and as measured."
+Weighting,"RLV, idealized","RLV, measured","Healthcare, idealized","Healthcare, measured"
+Neutral,0.869,0.800,0.877,0.812
+Alignment first,0.803,0.764,0.827,0.790
+Stability first,0.888,0.845,0.893,0.853
+Admissibility first,0.869,0.827,0.866,0.827
+Governance first,0.919,0.766,0.924,0.781
+Release facing,0.860,0.778,0.869,0.792
+Supervisory facing,0.845,0.817,0.854,0.828

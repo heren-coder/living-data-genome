@@ -1,0 +1,10 @@
+# Table 4. Protocol-declared gene-dominance profiles for the four operating contexts of each configuration.
+Configuration,Context,Speed / AccessEscalationRate,Attention / AuditCoverage,Density / ConcurrentRecordDensity,Environment / AccessControlRegime
+RLV,dense_day,0.20,0.30,0.35,0.15
+RLV,sparse_day,0.35,0.25,0.15,0.25
+RLV,dense_night,0.20,0.25,0.30,0.25
+RLV,sparse_night,0.35,0.15,0.10,0.40
+Healthcare,high_load_daytime,0.15,0.35,0.35,0.15
+Healthcare,low_load_daytime,0.20,0.40,0.15,0.25
+Healthcare,high_load_nighttime,0.25,0.20,0.30,0.25
+Healthcare,low_load_nighttime,0.35,0.15,0.10,0.40

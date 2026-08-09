@@ -1,0 +1,13 @@
+# Table 3. The placement contract for the lifecycle vocabulary.
+Lifecycle term,Dominant object and operator,Governance location,Method family in Section 3,Case interpretation
+Genesis,"internal state, T_gen","supervisory phase, L1",scenario-conditioned generation and structured embedding,partial traces seed several feasible accounts
+Mutation,"state–gene pair, T_mut","supervisory phase, L1–L2",diffusion-style bounded variation and controlled counterfactual perturbation,alternative timing and reaction hypotheses are explored without external commitment
+Repair,"internal state, T_rep","supervisory phase, L2",consistency-aware filtering and admissible projection,accounts are corrected when refined context makes earlier hypotheses infeasible
+Expression,"candidate artifact, Φ","boundary layer, L3","counterfactual release probing, with attribution cross-checked against exact Shapley values and a local surrogate",a stabilized account is packaged as an institution-facing artifact
+Immune screening,"candidate artifact, indicator A_R","release boundary, L2–L3","feasibility, policy and stability gating",unstable or over-disclosing accounts are withheld from release
+Ectopic expression,"dominance profile, indicator A_π","release boundary, L2–L3",context-conditioned dominance screening against a declared profile,accounts discordant with the declared context are routed to repair
+Ethical boundary,"admissible region, indicator A_g",all layers,policy-encoded and harm-aware constraint restriction,"privacy and proportionality shape what may be inferred, stored or externalized"
+Agreement,"released artifact, Agr","boundary to evidentiary, L3–L4",federated alignment across institution-facing artifacts,released accounts are checked for multi-node coherence without raw-data exchange
+Apoptosis,"released artifact, T_rev","evidentiary phase, L4",governance-triggered certified invalidation,an invalidated account is withdrawn from institutional validity
+Memory,"lineage record, Lin","evidentiary phase, L4","append-only lineage logging, optionally ledger-backed","certification, contestation, revocation and regeneration remain auditable"
+Regeneration,"successor artifact, T_rep then Φ","evidentiary phase, L4",controlled re-expression under updated constraints,a corrected account is re-issued without erasing the prior lineage

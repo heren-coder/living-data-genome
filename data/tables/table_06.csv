@@ -1,0 +1,12 @@
+# Table 6. Gene-wise ablation results for both domain configurations.
+Gene dropped,Δ alignment,Δ baseline,Survival,Δ survival,Δ aggregate
+"RLV (full model: alignment 0.716, baseline 0.595, survival 0.870)",,,,,
+Speed,−0.044 *,−0.084 *▴,0.897,+0.027,+0.006
+Attention,+0.003,−0.014,0.899,+0.029,+0.021
+Density,−0.130 *,+0.006,0.915,+0.045,−0.020
+Environment,−0.005,−0.009,0.894,+0.024,+0.017
+"Healthcare (full model: alignment 0.749, baseline 0.553, survival 0.849)",,,,,
+AccessEscalationRate,−0.090 *,+0.021,0.895,+0.046,−0.003
+AuditCoverage,−0.046 *,+0.012,0.874,+0.025,+0.006
+ConcurrentRecordDensity,−0.031 *▴,+0.008,0.877,+0.028,+0.011
+AccessControlRegime,−0.037 *,−0.060 *▴,0.893,+0.044,+0.014

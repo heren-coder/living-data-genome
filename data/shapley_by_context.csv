@@ -1,0 +1,9 @@
+domain,context,n,pool_ref_modal_share,local_ref_modal_share
+RLV,dense_day,175,0.771,0.549
+RLV,dense_night,195,0.944,0.39
+RLV,sparse_day,153,0.804,0.333
+RLV,sparse_night,153,0.987,0.366
+Healthcare,high_load_daytime,132,0.432,0.341
+Healthcare,high_load_nighttime,114,0.737,0.272
+Healthcare,low_load_daytime,180,0.65,0.378
+Healthcare,low_load_nighttime,168,0.887,0.369

@@ -1,0 +1,35 @@
+import matplotlib; matplotlib.use("Agg")
+import numpy as np, pandas as pd, matplotlib.pyplot as plt
+d=pd.read_csv("misrouting_saturation.csv")
+INK="#1F3864"; ACC="#C55A11"; BK="#000000"
+MM=1/25.4
+fig=plt.figure(figsize=(184.6*MM,57*MM),dpi=600)
+a1=fig.add_axes([0.075,0.255,0.245,0.555])
+a2=fig.add_axes([0.405,0.255,0.245,0.555])
+a3=fig.add_axes([0.735,0.255,0.245,0.555])
+for dom,col,mk in [("RLV",INK,"o"),("Healthcare",ACC,"s")]:
+    s=d[d.domain==dom].sort_values("seed_runs")
+    a1.plot(s.seed_runs,s.pairs,color=col,marker=mk,markersize=3.8,linewidth=1.4,label=dom)
+    a2.plot(s.seed_runs,s.forfeit*100,color=col,marker=mk,markersize=3.8,linewidth=1.4)
+    a3.plot(s.seed_runs,s.worsened*100,color=col,marker=mk,markersize=3.8,linewidth=1.4)
+a1.axhline(32,color="#9A9A9A",linewidth=0.9,linestyle=(0,(4,3)))
+a1.text(6,33.2,"32 unique cases in the pool",fontsize=6.4,color=BK)
+a1.set_ylabel("matched pairs recovered",fontsize=7.2,color=BK)
+a1.set_ylim(0,38)
+a1.set_title("the cell is exhausted, not sampled",fontsize=7.4,color="#0F2545",fontweight="bold",pad=6)
+a1.legend(fontsize=6.8,frameon=False,loc="lower right",labelcolor=BK)
+a2.set_ylabel("correction forfeited (%)",fontsize=7.2,color=BK); a2.set_ylim(0,100)
+a2.set_title("and the estimates settle with it",fontsize=7.4,color="#0F2545",fontweight="bold",pad=6)
+a3.set_ylabel("left worse than before repair (%)",fontsize=7.2,color=BK); a3.set_ylim(0,40)
+a3.set_title("as does the harm",fontsize=7.4,color="#0F2545",fontweight="bold",pad=6)
+for a in (a1,a2,a3):
+    a.set_xscale("log"); a.set_xticks([5,20,80,400]); a.set_xticklabels(["5","20","80","400"])
+    a.set_xlabel("seed runs",fontsize=7.2,color=BK)
+    a.tick_params(labelsize=6.8,colors=BK)
+    a.axvspan(80,420,facecolor="#9A9A9A",alpha=0.10)
+    for sp in ("top","right"): a.spines[sp].set_visible(False)
+    a.spines['left'].set_color(BK); a.spines['bottom'].set_color(BK)
+fig.text(0.5,0.048,"beyond eighty seed runs the shaded region adds no new case and moves no reported quantity",
+         ha="center",fontsize=6.6,color=BK,style="italic")
+fig.savefig("Figure_15.png",facecolor="white")
+print("ok")

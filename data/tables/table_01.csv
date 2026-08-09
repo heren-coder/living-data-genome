@@ -1,0 +1,15 @@
+"# Table 1. The design contract. For every constant the protocol declares, the table names the institutional decision it governs and the role entitled to declare it. No entry is an estimated quantity."
+Constant,The institutional decision it governs,Declared by,Domain-dependent,Swept over,Reported in
+δ = 0.33 / 0.31,the band within which a reconstruction is treated as physically and causally feasible,the technical regulator that fixes kinematic and signal-timing standards,domain-specific,0.15–0.55,Section 3.11
+q_min = 0.50,the coverage a coordinate must have before it may appear in an explanation payload,the disclosure authority,same value used,0–0.80,Section 3.4
+τ = 0.90,the stability a supervisory state must show before it is promoted to a certified artifact,"the releasing institution, as risk owner",same value used,0–0.98,Section 3.4
+ε_P = 0.25,the magnitude of variation over which a reliability claim is asserted to hold,the assessing party,same value used,0.05–0.80,Section 3.11
+s_TS = 8.0,how much of the unit interval the transition-stability score occupies,the party that fixes the evaluation protocol,invariant,1–32,Section 3.11
+"w = (.25, .25, .25, .25)",the relative weight carried by each of the four reliability components,"the adjudicating body, regulatory or judicial",same value used,seven weightings,Section 3.11
+ξ = 0.030,how far a dominance profile may depart from its declared context before the candidate is flagged,the reviewing institution,same value used,0.002–0.08,Section 3.8
+η = 0.010,whether an anomaly is attributed to the declared label or to the reconstruction,the reviewing institution,same value used,0–0.05,Section 3.8
+τ_lev = 0.70,the level corridor of cross-layer agreement,the operator's monitoring function,invariant,"swept on the flag, Section 3.2",Section 3.2
+τ_bal = 0.80,the balance corridor of the same agreement,the operator's monitoring function,invariant,"swept on the flag, Section 3.2",Section 3.2
+"attribution reference, local at half the band half-width","which question an attribution answers: which constraint binds this package, or which coordinate is generally decisive in the context",the party that fixes the evaluation protocol,invariant,local and global compared,Section 3.4
+ρ distributional tolerance,which trace populations the proxy may be applied to,the party that fixes the evaluation protocol,domain-specific,not evaluated here,Section 4
+ρ_A admission-rate tolerance,whether the declared region admits two populations alike,the party that fixes the evaluation protocol,domain-specific,not evaluated here,Section 4

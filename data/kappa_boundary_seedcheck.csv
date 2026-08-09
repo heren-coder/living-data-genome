@@ -1,0 +1,9 @@
+domain,n_seeds,boundary_pct
+RLV,5,16.5
+RLV,10,15.9
+RLV,15,16.3
+RLV,25,16.3
+Healthcare,5,17.2
+Healthcare,10,16.5
+Healthcare,15,17.0
+Healthcare,25,17.0

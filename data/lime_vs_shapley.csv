@@ -1,0 +1,3 @@
+domain,n_released,agree_cf_shapley,agree_cf_lime,agree_shapley_lime,all_three_agree,chance,lime_top_share_Speed,lime_top_share_Attention,lime_top_share_Density,lime_top_share_Environment,lime_top_share_AccessEscalationRate,lime_top_share_AuditCoverage,lime_top_share_ConcurrentRecordDensity,lime_top_share_AccessControlRegime
+RLV,676,0.27218934911242604,0.8505917159763313,0.23964497041420119,0.21301775147928995,0.25,0.22633136094674555,0.27071005917159763,0.30029585798816566,0.20266272189349113,,,,
+Healthcare,594,0.25084175084175087,0.8939393939393939,0.23737373737373738,0.22053872053872053,0.25,,,,,0.24915824915824916,0.23905723905723905,0.2760942760942761,0.2356902356902357

@@ -1,0 +1,20 @@
+# Table 12. Context-corruption results at the reference operating point.
+,RLV,Healthcare
+Screening outcome,,
+Feasible candidates,805,755
+Corrupted labels,163 ± 9,150 ± 7
+Detection rate,0.763 ± 0.024,0.840 ± 0.038
+False-flag rate,0.180 ± 0.002,0.161 ± 0.007
+Attribution,,
+Attribution rate,0.975 ± 0.017,0.984 ± 0.010
+Misattribution rate,0.126 ± 0.018,0.178 ± 0.022
+"Wrongly reviewed, absolute",0.023,0.029
+Label recovery rate,0.902 ± 0.026,0.937 ± 0.031
+Misrouting cost (matched counterfactual),,
+Misrouted candidates,80,88
+Misrouted share of corrupted,0.012,0.015
+Matched pairs at saturation,32,32
+Correction forfeited,41.8%,73.0%
+Left worse than before repair,9.4%,25.0%
+"Cost, median",+0.0040,+0.0244
+"Cost positive, fraction",1.00,1.00

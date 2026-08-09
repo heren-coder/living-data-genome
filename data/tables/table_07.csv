@@ -1,0 +1,11 @@
+# Table 7. Governance sequence results at the reference tightening magnitude.
+,RLV,Healthcare
+Revoke rate,0.294 ± 0.032,0.322 ± 0.019
+Random-redraw success rate,0.051 ± 0.020,0.041 ± 0.033
+Governed regeneration success rate,0.854 ± 0.044,0.867 ± 0.045
+Governance coherence: baseline,1.000,1.000
+Governance coherence: discard,0.717,0.736
+Governance coherence: regenerate,1.000,1.000
+Reliability: baseline (generation 1),0.900,0.913
+Reliability: discard (counterfactual),0.756 ± 0.017,0.752 ± 0.010
+Reliability: regenerate (this framework),0.890 ± 0.003,0.903 ± 0.003

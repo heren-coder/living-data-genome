@@ -1,0 +1,9 @@
+domain,context,tightest,p_min,gap,pool_conc
+RLV,dense_day,A,0.958,0.014,0.771
+RLV,sparse_day,D,0.909,0.021,0.804
+RLV,dense_night,S,0.964,0.02,0.944
+RLV,sparse_night,D,0.913,0.046,0.987
+Healthcare,high_load_daytime,E,0.957,0.0,0.432
+Healthcare,low_load_daytime,E,0.975,0.008,0.65
+Healthcare,high_load_nighttime,S,0.927,0.021,0.737
+Healthcare,low_load_nighttime,S,0.897,0.033,0.887

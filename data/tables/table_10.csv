@@ -1,0 +1,6 @@
+# Table 10. Context-mismatch routing outcome at the reference tolerance and margin.
+Route,RLV,Healthcare
+Proceed,71.0%,71.4%
+Context review,1.8%,2.4%
+Quarantine or repair,14.0%,11.4%
+Inadmissible,13.2%,14.9%

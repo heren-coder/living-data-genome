@@ -8,7 +8,7 @@ that was deliberately included from the start for exactly this purpose.
   rho_{i,t}      = D(g_{i,t})            gene-dominance profile (simplex)
   Xi_{i,t}(c)    = JSD(rho, pi(c))       observed-vs-expected divergence
   A_pi(i,t;c)    = 1[Xi <= xi]           context-mismatch admissibility
-  Route          = proceed / quarantine-repair / inadmissible   (Eq. 2.59e)
+  Route          = proceed / quarantine-repair / inadmissible   (Eq. 2.20)
 """
 
 import numpy as np
@@ -64,7 +64,7 @@ def context_repair(g: np.ndarray, pi_c: np.ndarray, bounds: dict, pull_fraction:
 
 
 def run_context_repair_loop(df: pd.DataFrame, pi_lookup: pd.DataFrame, domain: str, config,
-                             xi_threshold: float = 0.010, pull_fraction: float = 0.4) -> dict:
+                             xi_threshold: float = 0.030, pull_fraction: float = 0.4) -> dict:
     pi_map = {
         row["context_label"]: np.array([row["pi_S"], row["pi_A"], row["pi_D"], row["pi_E"]])
         for _, row in pi_lookup[pi_lookup.domain == domain].iterrows()
@@ -147,4 +147,4 @@ if __name__ == "__main__":
         })
         print(domain, ref_rows[-1])
     pd.DataFrame(ref_rows).to_csv("../data/ectopic_expression_reference.csv", index=False)
-    print("\nSaved: ectopic_expression_sweep.csv, ectopic_expression_reference.csv")
+    print("\nSaved: data/ectopic_expression_sweep.csv, data/ectopic_expression_reference.csv")

@@ -1,7 +1,7 @@
 import matplotlib; matplotlib.use("Agg")
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 e=pd.read_csv("../data/sweep_eps.csv")
-s=pd.read_csv("sweep_sTS.csv") if __import__('os').path.exists("sweep_sTS.csv") else None
+s=pd.read_csv("../data/sweep_sTS.csv") if __import__("os").path.exists("../data/sweep_sTS.csv") else None
 INK="#1F3864"; ACC="#C55A11"; BK="#000000"
 MM=1/25.4
 fig=plt.figure(figsize=(184.6*MM,63*MM),dpi=600)
@@ -18,7 +18,7 @@ op=d[np.isclose(d.eps_P,0.25)]
 a1.plot(op.eps_P,op.TS_mean,marker="o",markersize=7,markerfacecolor="none",
         markeredgecolor=BK,markeredgewidth=1.4,zorder=5)
 a1.annotate("declared radius 0.25",(0.25,float(op.TS_mean.iloc[0])),
-            textcoords="offset points",xytext=(-10,-14),ha="right",fontsize=6.6,color=BK)
+            textcoords="offset points",xytext=(0,-34),ha="center",fontsize=6.6,color=BK)
 a1.set_xlabel("declared perturbation radius",fontsize=7.4,color=BK)
 a1.set_ylabel("transition stability",fontsize=7.4,color=BK)
 a1.set_ylim(0.30,1.02)

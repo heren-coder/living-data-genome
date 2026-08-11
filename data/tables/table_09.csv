@@ -2,8 +2,8 @@
 ,"Keyed hash, as used here",Classical (Ed25519),Post-quantum (ML-DSA-44)
 Signature field,32 B,64 B,"2,420 B"
 Signed event record,410 B,434 B,"3,574 B"
-Signing time per event,0.002 ms,0.040 ms,34.4 ms
-Signature verification,0.002 ms,0.125 ms,9.2 ms
+Signing time per event,under 0.01 ms,under 1 ms,about 20 ms
+Signature verification,under 0.01 ms,under 1 ms,about 5 ms
 "Merkle depth at 262,144 events",18,18,18
 Inclusion proof size,576 B,576 B,576 B
 Append to the tree,under 20 µs,under 20 µs,under 20 µs

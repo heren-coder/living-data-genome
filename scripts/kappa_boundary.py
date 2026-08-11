@@ -1,9 +1,15 @@
 """Where does the agreement estimate stop being stable, and is that boundary
 itself stable in the number of seeds?"""
-import sys, numpy as np, pandas as pd
-sys.path.insert(0,str(__import__('pathlib').Path(__file__).resolve().parent))
+import os as _os, sys as _sys
+_HERE = _os.path.dirname(_os.path.abspath(__file__))
+_sys.path.insert(0, _HERE)
+D = _os.path.join(_HERE, "..", "data") + _os.sep
+B = _os.path.join(_HERE, "..", "data") + _os.sep
+FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
+import numpy as np, pandas as pd
 from generator import RLV_CONFIG, HEALTHCARE_CONFIG, RNG_SEED
-D="../data/"
+
+from generator import RLV_CONFIG, HEALTHCARE_CONFIG, RNG_SEED
 df=pd.read_csv(D+"scenarios.csv")
 CFG={"RLV":RLV_CONFIG,"Healthcare":HEALTHCARE_CONFIG}
 K=["S","A","D","E"]
@@ -39,7 +45,7 @@ for dom,cfg in CFG.items():
                          cv=float(ks.std(ddof=1)/ks.mean()),
                          samples=";".join(f"{x:.4f}" for x in ks)))
 out=pd.DataFrame(rows)
-out.drop(columns=["samples"]).to_csv("kappa_boundary.csv",index=False)
+out.drop(columns=["samples"]).to_csv(D + "kappa_boundary.csv",index=False)
 print(out[["domain","variance_pct","kappa_mean","kappa_sd","cv"]].round(3).to_string(index=False))
 
 def boundary(sub):
@@ -66,5 +72,5 @@ for dom in CFG:
             sub.append(dict(variance_pct=r.variance_pct,cv=x.std(ddof=1)/x.mean()))
         b=boundary(pd.DataFrame(sub))
         chk.append(dict(domain=dom,n_seeds=n,boundary_pct=round(b,1) if b else None))
-c=pd.DataFrame(chk); c.to_csv("kappa_boundary_seedcheck.csv",index=False)
+c=pd.DataFrame(chk); c.to_csv(D + "kappa_boundary_seedcheck.csv",index=False)
 print(c.to_string(index=False))

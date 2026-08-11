@@ -7,7 +7,7 @@ scoped tested everything from a single-node perspective, with GC held at a
 placeholder. This script adds two lightweight, honestly-scoped tests:
 
   1. Federated agreement: N=4 simulated institutional nodes independently
-     apply the SAME admissibility protocol (Eq. 2.9) to a SHARED pool of
+     apply the SAME admissibility protocol (Eq. 2.8) to a SHARED pool of
      candidate artifacts, but each node's local implementation carries a
      small independent calibration perturbation (representing realistic
      inter-institutional implementation variance), and only each node's
@@ -16,7 +16,7 @@ placeholder. This script adds two lightweight, honestly-scoped tests:
      paper already commits to (Section 1.6/2.7) but never computes.
 
   2. Cryptographic lineage: the governance-demo lineage events (accept,
-     revoke, regenerate) are chained via SHA-256 digests (Eq. 2.59-2.63
+     revoke, regenerate) are chained via SHA-256 digests (Eq. 2.21-2.22 and (A7)-(A9)
      style hash commitments), and tamper-evidence is demonstrated directly
      by mutating one record and showing the chain verification fails from
      that point forward.
@@ -165,4 +165,4 @@ if __name__ == "__main__":
         print(f"  {k}: {v}")
     pd.DataFrame([crypto]).to_csv("../data/crypto_lineage_demo.csv", index=False)
 
-    print("\nSaved: federated_agreement.csv, crypto_lineage_demo.csv")
+    print("\nSaved: data/federated_agreement.csv, data/crypto_lineage_demo.csv")

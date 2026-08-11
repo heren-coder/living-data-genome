@@ -1,9 +1,13 @@
+import os as _os, sys as _sys
+_HERE = _os.path.dirname(_os.path.abspath(__file__))
+_sys.path.insert(0, _HERE)
+D = _os.path.join(_HERE, "..", "data") + _os.sep
+B = _os.path.join(_HERE, "..", "data") + _os.sep
+FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
 import matplotlib; matplotlib.use("Agg")
 import numpy as np, pandas as pd, sys
 import matplotlib.pyplot as plt
-sys.path.insert(0,str(__import__('pathlib').Path(__file__).resolve().parent))
 from generator import RLV_CONFIG as R, HEALTHCARE_CONFIG as H
-D="../data/"
 sc=pd.read_csv(D+"scenarios.csv")
 G=['g_S','g_A','g_D','g_E']; K=['S','A','D','E']
 INK="#1F3864"; ACC="#C55A11"; SUB="#1A1A1A"; GRN="#2E7D32"; FRAME="#85B7EB"
@@ -72,6 +76,6 @@ ax2.spines['left'].set_color(SUB); ax2.spines['bottom'].set_color(SUB)
 ax2.legend(fontsize=6.6,frameon=False,loc="lower right")
 ax2.set_title("All two hundred events: the dip at mutation and the recovery at repair, in both configurations",
               fontsize=7.4,color=INK,fontweight="bold",pad=6)
-fig.savefig("Figure_8.png",facecolor="white")
+fig.savefig(FIGDIR + "Figure_8.png",facecolor="white")
 print("olay:",ev,"aile:",len(fam))
 print("oranlar:",{k:[round(x,3) for x in v] for k,v in rates.items()})

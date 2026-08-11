@@ -1,0 +1,4 @@
+scheme,sig_bytes,record_bytes,sign_ms,verify_ms,repeats
+Keyed hash,32,410,0.001,0.001,25
+Ed25519,64,434,0.118,0.269,25
+ML-DSA-44,2420,3574,19.418,4.973,25

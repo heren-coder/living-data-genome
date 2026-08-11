@@ -1,12 +1,18 @@
 """LIME surrogate on the declared release rule, compared against the exact
 interventional Shapley values and the counterfactual binding coordinate."""
+import os as _os, sys as _sys
+_HERE = _os.path.dirname(_os.path.abspath(__file__))
+_sys.path.insert(0, _HERE)
+D = _os.path.join(_HERE, "..", "data") + _os.sep
+B = _os.path.join(_HERE, "..", "data") + _os.sep
+FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
+import numpy as np, pandas as pd
+from generator import RLV_CONFIG, HEALTHCARE_CONFIG, RNG_SEED
+
 import itertools, sys
 from math import factorial
 import numpy as np, pandas as pd
-sys.path.insert(0, '.')
 from generator import RLV_CONFIG, HEALTHCARE_CONFIG
-
-D = "../data/"
 QMIN, TAU, STS = 0.50, 0.90, 8.0
 CFG = {"RLV": RLV_CONFIG, "Healthcare": HEALTHCARE_CONFIG}
 NAMES = {"RLV": ["Speed","Attention","Density","Environment"],
@@ -101,6 +107,6 @@ for dom in ["RLV","Healthcare"]:
         r[f"lime_top_share_{NAMES[dom][k]}"]=float((lm==k).mean())
     rows.append(r)
 out=pd.DataFrame(rows)
-out.to_csv("../data/lime_vs_shapley.csv",index=False)
+out.to_csv("" + B + "lime_vs_shapley.csv",index=False)
 print(out[["domain","n_released","agree_cf_shapley","agree_cf_lime",
            "agree_shapley_lime","all_three_agree"]].round(3).to_string(index=False))

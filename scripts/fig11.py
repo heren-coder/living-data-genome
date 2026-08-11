@@ -1,6 +1,11 @@
+import os as _os, sys as _sys
+_HERE = _os.path.dirname(_os.path.abspath(__file__))
+_sys.path.insert(0, _HERE)
+D = _os.path.join(_HERE, "..", "data") + _os.sep
+B = _os.path.join(_HERE, "..", "data") + _os.sep
+FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
 import matplotlib; matplotlib.use("Agg")
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
-D="../data/"
 a=pd.read_csv(D+"ablation_results.csv"); sg=pd.read_csv(D+"ablation_significance.csv")
 INK="#1F3864"; ACC="#C55A11"; BK="#000000"
 FULL={"RLV":dict(A=0.716169,SR=0.870083),"Healthcare":dict(A=0.749412,SR=0.849250)}
@@ -37,5 +42,5 @@ fig.text(0.5,0.937,"dropping a gene inflates survival and costs alignment; only 
          ha="center",fontsize=7.4,color="#0F2545",fontweight="bold")
 fig.text(0.5,0.045,"filled markers survive the Holm correction across the sixteen tests; orange marks the gene whose removal lowers the aggregate",
          ha="center",fontsize=6.6,color=BK,style="italic")
-fig.savefig("Figure_11.png",facecolor="white")
+fig.savefig(FIGDIR + "Figure_11.png",facecolor="white")
 print("ok")

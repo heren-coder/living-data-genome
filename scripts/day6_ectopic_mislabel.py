@@ -42,12 +42,19 @@ Measured:
   ctx_distance          JSD between the declared and the true context
                         profiles, split by whether the separation test
                         attributed the mismatch
+  clip split            the misrouting cost scales with the declared context
+                        separation only while the feasibility re-clip does
+                        not bind; where it binds the repaired point lands on
+                        the band whichever profile it was pulled toward, so
+                        the two regimes are reported separately rather than
+                        pooled. The unclipped regime is the one in which the
+                        operator can be compared across domains.
 """
 
 import numpy as np
 import pandas as pd
 from scipy.spatial.distance import jensenshannon
-from scipy.stats import wilcoxon
+from scipy.stats import wilcoxon, spearmanr
 
 from generator import RLV_CONFIG, HEALTHCARE_CONFIG, _simplex
 from day5_ectopic import context_repair
@@ -55,7 +62,7 @@ from day5_ectopic import context_repair
 SEEDS = [0, 1, 2, 3, 4]
 MATCHED_SEEDS = list(range(40))   # matched design: the misrouted cell is a rare
                                   # intersection, so it needs more draws to fill
-XI = 0.010          # reference tolerance, matches Table 3.6
+XI = 0.030          # declared tolerance, Table 3.9
 ETA = 0.010         # reference separation margin
 EPS = 0.20          # reference misassignment rate
 PULL = 0.40         # context-repair pull fraction, shared by both arms
@@ -177,6 +184,31 @@ def corruption(d, pi_lookup, domain, xi, eta, pull=0.4):
     }
 
 
+def _repair_traced(g, pi_c, bounds, pull=PULL):
+    """
+    context_repair from day5_ectopic, re-expressed so that the re-clipping
+    step can be observed. Returns the repaired coordinate and whether any
+    coordinate was clipped to the feasibility bounds.
+
+    The returned coordinate is asserted equal to context_repair's, so the
+    trace adds observability without changing the operator.
+    """
+    total_mass = g.sum()
+    rho = _simplex(g)
+    new_rho = rho + pull * (pi_c - rho)
+    new_rho = new_rho / new_rho.sum()
+    new_g = new_rho * total_mass
+    clipped = False
+    for i, k in enumerate(["S", "A", "D", "E"]):
+        c = np.clip(new_g[i], bounds[k][0], bounds[k][1])
+        if abs(c - new_g[i]) > 1e-12:
+            clipped = True
+        new_g[i] = c
+    assert np.allclose(new_g, context_repair(g, pi_c, bounds, pull)), \
+        "traced repair diverged from context_repair"
+    return new_g, clipped
+
+
 def misrouting_cost(df, pi_lookup, domain, xi, eta, seeds, pull=PULL):
     """
     Matched test of claim (iii).
@@ -194,7 +226,7 @@ def misrouting_cost(df, pi_lookup, domain, xi, eta, seeds, pull=PULL):
     pim = _pi_map(pi_lookup, domain)
     cfg = CONFIG[domain]
     seen = set()
-    before, wrong, right = [], [], []
+    before, wrong, right, gaps, clips = [], [], [], [], []
     dist_attr, dist_missed = [], []
 
     for s in seeds:
@@ -213,19 +245,36 @@ def misrouting_cost(df, pi_lookup, domain, xi, eta, seeds, pull=PULL):
                 continue
             seen.add(key)
             g = np.array([r.g_S, r.g_A, r.g_D, r.g_E])
-            gw = context_repair(g, pim[r.declared_context],
-                                cfg.feasibility_bounds(r.declared_context), pull)
-            gr = context_repair(g, pim[r.true_context],
-                                cfg.feasibility_bounds(r.true_context), pull)
+            gw, cw = _repair_traced(g, pim[r.declared_context],
+                                    cfg.feasibility_bounds(r.declared_context), pull)
+            gr, cr = _repair_traced(g, pim[r.true_context],
+                                    cfg.feasibility_bounds(r.true_context), pull)
             before.append(_jsd(_simplex(g), pim[r.true_context]))
             wrong.append(_jsd(_simplex(gw), pim[r.true_context]))
             right.append(_jsd(_simplex(gr), pim[r.true_context]))
+            gaps.append(gap)
+            clips.append(bool(cw or cr))
 
     b, w, rt = np.array(before), np.array(wrong), np.array(right)
+    gp, cl = np.array(gaps), np.array(clips)
     cost = w - rt
     _, p_matched = wilcoxon(rt, w)
     _, p_naive = wilcoxon(b, w)
     lo, hi = np.percentile(cost, [2.5, 97.5])
+
+    # Cost tracks the declared context separation only while the feasibility
+    # re-clip does not bind. Where it binds, the repaired point lands on the
+    # band regardless of which profile it was pulled toward, so the split is
+    # reported rather than pooled.
+    def _rho(mask):
+        if mask.sum() < 10:
+            return np.nan, np.nan, int(mask.sum()), np.nan
+        r, p = spearmanr(cost[mask], gp[mask])
+        return float(r), float(p), int(mask.sum()), float(np.median(cost[mask]))
+
+    r_free, p_free, n_free, med_free = _rho(~cl)
+    r_clip, p_clip, n_clip, med_clip = _rho(cl)
+    r_all, p_all = spearmanr(cost, gp)
 
     summary = {
         "domain": domain,
@@ -239,6 +288,16 @@ def misrouting_cost(df, pi_lookup, domain, xi, eta, seeds, pull=PULL):
         "misrouting_cost_ci_hi": hi,
         "frac_cost_positive": float((cost > 0).mean()),
         "p_matched": p_matched,
+        "clip_bind_rate": float(cl.mean()),
+        "n_unclipped": n_free,
+        "rho_cost_gap_unclipped": r_free,
+        "p_cost_gap_unclipped": p_free,
+        "median_cost_unclipped": med_free,
+        "n_clipped": n_clip,
+        "rho_cost_gap_clipped": r_clip,
+        "p_cost_gap_clipped": p_clip,
+        "median_cost_clipped": med_clip,
+        "rho_cost_gap_pooled": float(r_all),
         "Xi_true_before_repair": b.mean(),
         "frac_worsened_naive": float((w > b).mean()),
         "p_naive": p_naive,
@@ -249,7 +308,7 @@ def misrouting_cost(df, pi_lookup, domain, xi, eta, seeds, pull=PULL):
     }
     pairs = pd.DataFrame({"domain": domain, "Xi_before": b,
                           "Xi_repair_true": rt, "Xi_repair_declared": w,
-                          "cost": cost})
+                          "cost": cost, "ctx_gap": gp, "clipped": cl})
     return summary, pairs
 
 
@@ -307,6 +366,10 @@ def main():
         print(f"  {'95% interval':30s} [{s['misrouting_cost_ci_lo']:+.5f}, {s['misrouting_cost_ci_hi']:+.5f}]")
         print(f"  {'fraction with positive cost':30s} {s['frac_cost_positive']:.3f}")
         print(f"  {'Wilcoxon p (matched)':30s} {s['p_matched']:.3g}")
+        print(f"  cost vs declared context separation (Spearman):")
+        print(f"    {'clip does not bind':28s} r={s['rho_cost_gap_unclipped']:+.3f}  n={s['n_unclipped']}  median {s['median_cost_unclipped']:+.5f}")
+        print(f"    {'clip binds':28s} r={s['rho_cost_gap_clipped']:+.3f}  n={s['n_clipped']}  median {s['median_cost_clipped']:+.5f}")
+        print(f"    {'pooled':28s} r={s['rho_cost_gap_pooled']:+.3f}  clip bind rate {s['clip_bind_rate']:.3f}")
         print(f"  naive before/after, for contrast:")
         print(f"    {'Xi before repair':28s} {s['Xi_true_before_repair']:.4f}")
         print(f"    {'fraction worsened':28s} {s['frac_worsened_naive']:.3f}   p={s['p_naive']:.3g}")
@@ -351,12 +414,13 @@ def main():
                          "detection_rate": a.detection_rate.mean(),
                          "false_flag_rate": a.false_flag_rate.mean(),
                          "attribution_rate": a.attribution_rate.mean(),
-                         "misattribution_rate": a.misattribution_rate.mean()})
+                         "misattribution_rate": a.misattribution_rate.mean(),
+                         "label_recovery_rate": a.label_recovery_rate.mean()})
     eps_df = pd.DataFrame(rows)
     print(eps_df.round(3).to_string(index=False))
     eps_df.to_csv("../data/a1_eps_sweep.csv", index=False)
 
-    print("\nSaved: a1_reference.csv, a1_misrouting_cost.csv, a1_misrouting_pairs.csv,\n       a1_eta_sweep.csv, a1_eps_sweep.csv")
+    print("\nSaved: data/a1_reference.csv, data/a1_misrouting_cost.csv, data/a1_misrouting_pairs.csv,\n       data/a1_eta_sweep.csv, data/a1_eps_sweep.csv")
 
 
 if __name__ == "__main__":

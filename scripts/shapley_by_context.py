@@ -1,9 +1,16 @@
 """Per-context concentration of the pool-referenced attribution, as predicted by P5."""
-import sys, itertools, numpy as np, pandas as pd
+import os as _os, sys as _sys
+_HERE = _os.path.dirname(_os.path.abspath(__file__))
+_sys.path.insert(0, _HERE)
+D = _os.path.join(_HERE, "..", "data") + _os.sep
+B = _os.path.join(_HERE, "..", "data") + _os.sep
+FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
+import itertools, numpy as np, pandas as pd
 from math import factorial
-sys.path.insert(0,str(__import__('pathlib').Path(__file__).resolve().parent))
 from generator import RLV_CONFIG, HEALTHCARE_CONFIG, RNG_SEED
-D="../data/"
+
+from math import factorial
+from generator import RLV_CONFIG, HEALTHCARE_CONFIG, RNG_SEED
 CFG={"RLV":RLV_CONFIG,"Healthcare":HEALTHCARE_CONFIG}
 QMIN, TAU, STS = 0.50, 0.90, 8.0
 NBG=256
@@ -63,7 +70,7 @@ for dom in ["RLV","Healthcare"]:
         rows.append(dict(domain=dom,context=c,n=int(m.sum()),
                          pool_ref_modal_share=round(float(conc_sh),3),
                          local_ref_modal_share=round(float(conc_cf),3)))
-out=pd.DataFrame(rows); out.to_csv("shapley_by_context.csv",index=False)
+out=pd.DataFrame(rows); out.to_csv(D + "shapley_by_context.csv",index=False)
 print(out.to_string(index=False))
 print()
 for dom in ["RLV","Healthcare"]:

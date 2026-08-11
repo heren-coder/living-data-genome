@@ -177,4 +177,4 @@ if __name__ == "__main__":
 
     full_df = pd.concat(all_results, ignore_index=True)
     full_df.to_csv("../data/ablation_results.csv", index=False)
-    print("\nSaved: ../data/ablation_results.csv")
+    print("\nSaved: data/ablation_results.csv")

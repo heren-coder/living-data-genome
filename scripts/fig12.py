@@ -1,7 +1,9 @@
 import matplotlib; matplotlib.use("Agg")
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
+import matplotlib.patheffects as pe
+HALO=[pe.withStroke(linewidth=2.2,foreground="white")]
 from matplotlib.colors import LinearSegmentedColormap
-m=pd.read_csv("operating_map.csv")
+m=pd.read_csv("../data/operating_map.csv")
 INK="#1F3864"; ACC="#C55A11"; BK="#000000"
 cmap=LinearSegmentedColormap.from_list("g",["#FFFFFF","#CBD9EC","#7FA6D0","#2F5C96","#12305C"])
 MM=1/25.4
@@ -24,14 +26,14 @@ for (x0,wd),dom in zip(LAY,["RLV","Healthcare"]):
     ax.axhspan(vb,max(V)+1.5,facecolor=ACC,alpha=0.13,zorder=2)
     ax.axhline(vb,color=ACC,linewidth=1.4,linestyle=(0,(5,3)),zorder=3)
     ax.text(T[0]-0.002,vb-1.1,"agreement no longer stable",
-            fontsize=6.2,color=ACC,va="top",ha="left",zorder=6)
+            fontsize=6.2,color=ACC,va="top",ha="left",zorder=6,path_effects=HALO)
     peak=[T[int(np.argmax(Z[i]))] for i in range(len(V))]
     ax.plot(peak,V,color="white",linewidth=1.8,zorder=4)
     ax.plot(peak,V,color=BK,linewidth=0.7,zorder=5)
     ax.plot([0.05],[5],marker="o",markersize=6,markerfacecolor="white",
             markeredgecolor=BK,markeredgewidth=1.4,zorder=6)
     ax.annotate("operating point",(0.05,5),textcoords="offset points",xytext=(11,5),
-                fontsize=6.4,color=BK)
+                fontsize=6.4,color=BK,zorder=6,path_effects=HALO)
     ax.set_ylabel("calibration variance (%)" if dom=="RLV" else "",fontsize=7.0,color=BK)
     ax.tick_params(labelsize=6.6,colors=BK,labelbottom=False)
     ax.set_title(dom,fontsize=7.8,color="#0F2545",fontweight="bold",pad=6)

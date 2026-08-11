@@ -1,6 +1,6 @@
 import matplotlib; matplotlib.use("Agg")
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
-k=pd.read_csv("kappa_boundary.csv"); sc=pd.read_csv("kappa_boundary_seedcheck.csv")
+k=pd.read_csv("../data/kappa_boundary.csv"); sc=pd.read_csv("../data/kappa_boundary_seedcheck.csv")
 INK="#1F3864"; ACC="#C55A11"; BK="#000000"
 MM=1/25.4
 fig=plt.figure(figsize=(184.6*MM,69.6*MM),dpi=600)

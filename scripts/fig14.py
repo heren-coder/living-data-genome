@@ -27,7 +27,7 @@ ax2.axvline(0.030,color=BK,linewidth=0.9,linestyle=(0,(3,2)))
 ax2.set_xlabel("mismatch tolerance",fontsize=7.0,color=BK)
 ax2.set_ylabel("context review (%)",fontsize=7.0,color=BK)
 ax2.set_title("context review, own scale",fontsize=7.2,color="#0F2545",fontweight="bold",pad=6)
-ax2.text(0.079,4.25,"4.2% at the tightest\n0.1% at the loosest",fontsize=6.2,color=PUR,
+ax2.text(0.081,4.30,"tightest 4.2%\nloosest 0.1%",fontsize=6.4,color=PUR,
          ha="right",va="top",linespacing=1.25)
 
 for dom,col,ls in [("RLV",INK,"-"),("Healthcare",ACC,"--")]:
@@ -48,8 +48,8 @@ for dom,col,ls in [("RLV",INK,"-"),("Healthcare",ACC,"--")]:
     ax4.plot(s.eta,s.misattribution_rate,color=col,linestyle=(0,(1,1.6)),linewidth=1.4)
 ax4.axvline(0.010,color=BK,linewidth=0.9,linestyle=(0,(3,2)))
 ax4.text(0.0115,0.55,"declared",fontsize=6.2,color=BK)
-ax4.text(0.020,0.92,"attribution",fontsize=6.4,color=BK)
-ax4.text(0.020,0.08,"misattribution",fontsize=6.4,color=BK)
+ax4.text(0.034,0.99,"attribution",fontsize=6.4,color=BK,va="top")
+ax4.text(0.030,0.22,"misattribution",fontsize=6.4,color=BK,va="bottom")
 ax4.set_xlabel("separation margin",fontsize=7.0,color=BK)
 ax4.set_ylabel("rate",fontsize=7.0,color=BK)
 ax4.set_title("why a margin is needed",fontsize=7.2,color="#0F2545",fontweight="bold",pad=6)

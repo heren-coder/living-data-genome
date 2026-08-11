@@ -4,12 +4,18 @@ Convergent arms damage exactly one component's target failure mode and the
 aggregate must fall. Discriminant arms apply transformations that change no
 institutional fact and the aggregate must not move beyond a declared band.
 """
-import sys, numpy as np, pandas as pd
-sys.path.insert(0,str(__import__('pathlib').Path(__file__).resolve().parent))
+import os as _os, sys as _sys
+_HERE = _os.path.dirname(_os.path.abspath(__file__))
+_sys.path.insert(0, _HERE)
+D = _os.path.join(_HERE, "..", "data") + _os.sep
+B = _os.path.join(_HERE, "..", "data") + _os.sep
+FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
+import numpy as np, pandas as pd
 from generator import RLV_CONFIG, HEALTHCARE_CONFIG, RNG_SEED
 import rel_computation as R
 
-D="../data/"
+from generator import RLV_CONFIG, HEALTHCARE_CONFIG, RNG_SEED
+import rel_computation as R
 CFG={"RLV":RLV_CONFIG,"Healthcare":HEALTHCARE_CONFIG}
 G=["g_S","g_A","g_D","g_E"]; Q=["q_S","q_A","q_D","q_E"]; K=["S","A","D","E"]
 SEEDS=[0,1,2,3,4]
@@ -136,11 +142,11 @@ for dom,cfg in CFG.items():
         d,inv=d3_relabel(base,cfg,np.random.default_rng(RNG_SEED+101*seed+13))
         rows.append(dict(domain=dom,seed=seed,arm="context naming",kind="discriminant",
                          **score(d,Renamed(cfg,inv),dom,seed)))
-out=pd.DataFrame(rows); out.to_csv("validity_arms_raw.csv",index=False)
+out=pd.DataFrame(rows); out.to_csv(D + "validity_arms_raw.csv",index=False)
 agg=out.groupby(["domain","arm","kind"]).agg(
     A=("A","mean"),TS=("TS","mean"),SR=("SR","mean"),GC=("GC","mean"),
     Rel=("Rel","mean"),Rel_sd=("Rel","std")).reset_index()
 base=agg[agg.arm=="baseline"].set_index("domain")
 agg["dRel"]=[r.Rel-base.loc[r.domain,"Rel"] for r in agg.itertuples()]
-agg.to_csv("validity_arms.csv",index=False)
+agg.to_csv(D + "validity_arms.csv",index=False)
 print(agg.round(4).to_string(index=False))

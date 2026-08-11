@@ -1,10 +1,14 @@
+import os as _os, sys as _sys
+_HERE = _os.path.dirname(_os.path.abspath(__file__))
+_sys.path.insert(0, _HERE)
+D = _os.path.join(_HERE, "..", "data") + _os.sep
+B = _os.path.join(_HERE, "..", "data") + _os.sep
+FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
 import matplotlib; matplotlib.use("Agg")
 import numpy as np, pandas as pd, sys
 import matplotlib.pyplot as plt
-sys.path.insert(0,str(__import__('pathlib').Path(__file__).resolve().parent))
 from generator import RLV_CONFIG as R, HEALTHCARE_CONFIG as H
 from rel_computation import linear_cka, RNG_SEED
-D="../data/"
 sc=pd.read_csv(D+"scenarios.csv")
 G=['g_S','g_A','g_D','g_E']
 INK="#1F3864"; ACC="#C55A11"; GRN="#2E7D32"; SUB="#1A1A1A"
@@ -67,5 +71,5 @@ fig.legend(hs,["genesis (t = 0)","repair (t = 2)","case-facing (independent)"],
 
 fig.text(0.355,0.855,"colour marks the operating context, marker marks the view",
          ha="center",va="center",fontsize=7.8,color="#0F2545",fontweight="bold")
-fig.savefig("Figure_9.png",facecolor="white")
+fig.savefig(FIGDIR + "Figure_9.png",facecolor="white")
 print({k:[round(x,3) for x in v] for k,v in CKA.items()})

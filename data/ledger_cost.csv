@@ -1,0 +1,4 @@
+events,leaf_bytes,depth,proof_bytes,append_one_us,proof_verify_us,batch_rebuild_ms,chain_verify_ms
+6,411,3,96,1.3,1.4,0.01,0.0
+1024,411,10,320,4.1,4.6,1.0,0.58
+262144,411,18,576,6.8,7.7,258.97,144.89

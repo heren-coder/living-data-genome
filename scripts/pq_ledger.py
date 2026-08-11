@@ -1,4 +1,8 @@
 """Rebuild the permissioned ledger with real post-quantum signatures and re-measure."""
+import os as _os, sys as _sys
+_HERE = _os.path.dirname(_os.path.abspath(__file__))
+_sys.path.insert(0, _HERE)
+D = _os.path.join(_HERE, "..", "data") + _os.sep
 import json, hashlib, time, statistics, base64
 import numpy as np, pandas as pd
 from dilithium_py.ml_dsa import ML_DSA_44
@@ -84,5 +88,5 @@ for scheme,label in [("keyed","Keyed hash"),("mldsa","ML-DSA-44")]:
                          sign_ms=round(sign_ms,3),verify_sig_ms=round(ver_ms,3),
                          append_us=round(append*1e6,1),proof_verify_us=round(ver_proof*1e6,1),
                          rebuild_ms=round(rebuild*1e3,2)))
-out=pd.DataFrame(rows); out.to_csv("pq_ledger.csv",index=False)
+out=pd.DataFrame(rows); out.to_csv(D + "pq_ledger.csv",index=False)
 print(out.to_string(index=False))

@@ -4,17 +4,17 @@ Compute the four Rel components (Section 2.5.6 / 2.7) from the Day 1-2
 synthetic trajectories, and a simple supervised baseline for comparison.
 
 Design notes:
-  - A_triad: operationalized via the SAME linear-CKA machinery already
-    introduced for the cross-layer coherence proxy (Eq. 2.44, Section 2.8),
+  - A_triad: softened triadic alignment, Eq. (A2), instantiated through
+    linear CKA as the protocol-approved similarity operator,
     applied across three views: genesis (t=0, DNA-level internal state),
     repair (t=2, RNA-level expressed state), and the declared context
     regime mean (case-facing / protocol-declared claim). This reuses a
     method the paper already commits to, rather than inventing an ad hoc
     metric for this experiment.
-  - TS: Eq. (2.55), exponentially bounded quadratic displacement between
+  - TS: Eq. (A3), exponentially bounded quadratic displacement between
     consecutive lifecycle stages, weighted by the per-gene quality metadata
     q (M_{i,t} = diag(w_g), w_g proportional to q).
-  - SR: Eq. (2.56)-style admissibility survival, measured at the repair
+  - SR: Eq. (A5)-style admissibility survival, measured at the repair
     stage (t=2) -- the stage nearest to expression/release (Table 2.2).
   - GC: governance coherence is intentionally left at a neutral placeholder
     (GC=1.0) in this script. No certified governance events (contest /
@@ -43,7 +43,7 @@ REL_WEIGHTS = dict(A_triad=0.25, TS=0.25, SR=0.25, GC=0.25)
 
 
 # ---------------------------------------------------------------------------
-# Linear CKA (Kornblith et al., 2019) -- already cited in Section 2.5.6/2.8
+# Linear CKA (Kornblith et al., 2019) -- already cited in Section 2.5.6
 # ---------------------------------------------------------------------------
 
 def linear_cka(X: np.ndarray, Y: np.ndarray) -> float:
@@ -55,7 +55,7 @@ def linear_cka(X: np.ndarray, Y: np.ndarray) -> float:
 
 
 # ---------------------------------------------------------------------------
-# A_triad: cross-layer coherence proxy (Eq. 2.44 machinery), applied to
+# A_triad: softened triadic alignment (Eq. A2), applied to
 # {genesis, repair, declared context mean} instead of {D,R,C} sensor layers
 # ---------------------------------------------------------------------------
 
@@ -108,7 +108,7 @@ def compute_a_triad(df: pd.DataFrame, config, case_facing_noise_std: float = 0.1
 
 
 # ---------------------------------------------------------------------------
-# TS: Eq. (2.55) exponentially bounded quadratic displacement
+# TS: Eq. (A3) exponentially bounded quadratic displacement
 # ---------------------------------------------------------------------------
 
 def transition_stability(g_from: np.ndarray, g_to: np.ndarray, q: np.ndarray, scale: float = 8.0) -> float:
@@ -146,6 +146,57 @@ def compute_sr_per_event(df: pd.DataFrame) -> pd.Series:
 # ---------------------------------------------------------------------------
 # Baseline: logistic regression, genesis-only features -> repair admissibility
 # ---------------------------------------------------------------------------
+
+def compute_cross_layer(df: pd.DataFrame, traces: pd.DataFrame, config,
+                        case_facing_noise_std: float = 0.16,
+                        seed: int = RNG_SEED + 7) -> dict:
+    """
+    Cross-layer coherence proxy (Eq. 2.25), two components.
+
+      Z^(DNA)   = the protected trace u itself, raw_trace_dim-dimensional,
+                  broadcast from its event to that event's candidates.
+                  NOT the genesis gene coordinate: using the trace is what
+                  distinguishes this diagnostic from A_triad (Eq. A2),
+                  where all three views already live in gene space.
+      Z^(RNA)   = repair-stage (t=2) gene coordinate carried by the released
+                  package, per candidate.
+      Z^(Case)  = the same institutional reconstruction used by compute_a_triad,
+                  drawn under the same seed so the two diagnostics differ in
+                  their DNA-level view alone.
+
+    CL_lev is the geometric mean of the three pairwise alignments, replacing
+    the arithmetic mean: an arithmetic aggregation is the l1-coherence reading
+    of the density-matrix analogue and is level-only, so it cannot see how the
+    three alignments are distributed. CL_bal is the min/max ratio and recovers
+    exactly that information. Linear CKA admits the differing dimensionality
+    of Z^(DNA), which is what lets the trace enter without being compressed.
+    """
+    rng = np.random.default_rng(seed)
+    piv2 = df[df.stage_t == 2].set_index(["event_id", "candidate_id"])[["g_S", "g_A", "g_D", "g_E"]]
+    piv0 = df[df.stage_t == 0].set_index(["event_id", "candidate_id"])[["g_S", "g_A", "g_D", "g_E"]]
+    common = piv0.index.intersection(piv2.index)
+    repair = piv2.loc[common].values
+    event_ids = common.get_level_values("event_id")
+
+    ucols = [c for c in traces.columns if c.startswith("u_")]
+    u_by_event = traces.set_index("event_id")[ucols]
+    Z_dna = u_by_event.loc[event_ids].values
+
+    ctx_by_event = df[df.stage_t == 0].groupby("event_id")["context_label"].first()
+    case_by_event = {
+        ev: np.clip(config.context_means[ctx_by_event[ev]] + rng.normal(0, case_facing_noise_std, size=4), 0.0, 1.0)
+        for ev in ctx_by_event.index
+    }
+    Z_case = np.array([case_by_event[ev] for ev in event_ids])
+
+    a = np.array([linear_cka(Z_dna, repair),      # DNA - RNA
+                  linear_cka(repair, Z_case),     # RNA - Case
+                  linear_cka(Z_dna, Z_case)])     # DNA - Case
+    cl_lev = float(np.prod(a) ** (1.0 / 3.0))
+    cl_bal = float(a.min() / a.max())
+    return {"CL_lev": cl_lev, "CL_bal": cl_bal,
+            "CKA_dna_rna": float(a[0]), "CKA_rna_case": float(a[1]), "CKA_dna_case": float(a[2])}
+
 
 def run_baseline(df: pd.DataFrame, seed: int) -> dict:
     genesis = df[df.stage_t == 0][["event_id", "candidate_id", "g_S", "g_A", "g_D", "g_E",
@@ -193,7 +244,7 @@ def compute_rel(domain_name: str, df: pd.DataFrame, config, gc_placeholder: floa
     per_event["A_triad"] = a_triad_info["A_triad"]
     per_event["GC"] = gc_placeholder
 
-    # weighted geometric mean, Eq. (2.53a)
+    # weighted geometric mean, Eq. (2.17)
     per_event["Rel"] = (
         per_event["A_triad"] ** REL_WEIGHTS["A_triad"]
         * per_event["TS_event"] ** REL_WEIGHTS["TS"]
@@ -224,7 +275,10 @@ def compute_rel(domain_name: str, df: pd.DataFrame, config, gc_placeholder: floa
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("../data/scenarios.csv")
+    DATA = "../data/"
+    df = pd.read_csv(DATA + "scenarios.csv")
+    traces = pd.read_csv(DATA + "raw_traces.csv")
+    cross_rows = []
 
     results = []
     per_event_frames = {}
@@ -232,6 +286,11 @@ if __name__ == "__main__":
         sub = df[df.domain == name]
         summary, per_event, baseline_info = compute_rel(name, sub, config, seed=RNG_SEED)
         results.append(summary)
+        cl = compute_cross_layer(sub, traces[traces.domain == name], config, seed=RNG_SEED + 7)
+        cl["domain"] = name
+        cl["tau_lev"], cl["tau_bal"] = 0.70, 0.80
+        cl["Coh"] = int(cl["CL_lev"] >= 0.70 and cl["CL_bal"] >= 0.80)
+        cross_rows.append(cl)
         per_event_frames[name] = per_event
         print(f"\n=== {name} ===")
         for k, v in summary.items():
@@ -242,8 +301,9 @@ if __name__ == "__main__":
         print(f"  baseline details: {baseline_info}")
 
     results_df = pd.DataFrame(results)
-    results_df.to_csv("../data/rel_summary.csv", index=False)
+    results_df.to_csv(DATA + "rel_summary.csv", index=False)
+    pd.DataFrame(cross_rows).to_csv(DATA + "cross_layer_coherence.csv", index=False)
     for name, pe in per_event_frames.items():
-        pe.to_csv(f"../data/rel_per_event_{name.lower()}.csv")
+        pe.to_csv(DATA + f"rel_per_event_{name.lower()}.csv")
 
-    print("\nSaved: ../data/rel_summary.csv, rel_per_event_{rlv,healthcare}.csv")
+    print("\nSaved: data/rel_summary.csv, data/rel_per_event_{rlv,healthcare}.csv, data/cross_layer_coherence.csv")

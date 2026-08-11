@@ -9,12 +9,12 @@ Three-arm design, per the decision log:
      to hit a target revoke rate); artifacts that become inadmissible under
      C+ are REVOKED and then silently dropped, with no further lineage
      event. This is the naive "delete and forget" baseline the paper
-     explicitly argues against (Section 2.5.5: "Deletion is not
+     explicitly argues against (Section 2.6: "Deletion is not
      governance; it destroys auditability").
   C) Regenerate (this framework's mechanism) -- revoked artifacts are
      carried through a further mutation+repair cycle UNDER the new C+
      regime, with an explicit regenerate event linked back to the revoked
-     artifact's lineage (Eq. 2.52-2.63).
+     artifact's lineage (Eq. 2.21-2.22 and (A7)-(A9)).
 
 Governance coherence (GC) is operationalized directly from Cons(L)
 (Section 2.6): a revoked artifact with NO subsequent regenerate or explicit
@@ -158,4 +158,4 @@ if __name__ == "__main__":
         })
 
     pd.DataFrame(rows).to_csv("../data/governance_demo_results.csv", index=False)
-    print("\nSaved: ../data/governance_demo_results.csv")
+    print("\nSaved: data/governance_demo_results.csv")

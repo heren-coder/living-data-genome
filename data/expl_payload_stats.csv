@@ -1,0 +1,3 @@
+domain,n_released,payload_bytes_median,payload_bytes_min,payload_bytes_max,distinct_digests,consistent_box_fraction_median
+RLV,676,168,161,173,676,0.3241954579402794
+Healthcare,594,187,177,192,594,0.37246444939614487

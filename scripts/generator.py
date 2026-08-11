@@ -9,13 +9,13 @@ Design goals (per karar özeti madde 3 & 5):
   - Simplified trace-to-gene proxy Pi(.) : MLP + LoRA-style context-conditioned
     adaptation, standing in for the full Transformer+LoRA method hook (Table 2.1).
   - Bounded genesis: each incident produces a FAMILY of K admissible candidate
-    seeds (Eq. 2.22), not a single point — needed later for SR (survival rate)
+    seeds (Eq. 2.12), not a single point — needed later for SR (survival rate)
     and ablation.
   - context_label (c) is attached to every event from the start (cannot be
     added retroactively — needed for Section 2.5.7 ectopic-expression screening
     in Day 5).
   - pi(c): protocol-declared (not learned) expected gene-dominance profile per
-    context, used later to compute Xi_i,t(c) (Eq. 2.48).
+    context, used later to compute Xi_i,t(c) (Eq. A14).
 """
 
 import numpy as np
@@ -194,7 +194,7 @@ class TraceToGeneEncoder:
 
 # ---------------------------------------------------------------------------
 # 3. Bounded genesis + mutation + repair: a real 3-stage trajectory per
-#    candidate (Eq. 2.19-2.30), not a single static snapshot.
+#    candidate (Eq. 2.11-2.15), not a single static snapshot.
 #
 #    This is what makes the "lifecycle" claim operational rather than
 #    asserted: repair's effect (recovering admissibility lost during
@@ -221,12 +221,12 @@ def generate_domain_dataset(
       - produces a raw partial trace u_{i,t} (context-conditioned, noisy, with
         missingness -> quality metadata q)
       - is mapped through Pi(.) into a genesis candidate FAMILY of K feasible
-        seeds E_i,t^(0,k) (Eq. 2.22)
+        seeds E_i,t^(0,k) (Eq. 2.12)
       - EACH candidate then follows a 3-stage trajectory:
-          stage_t=0  genesis  (Eq. 2.19-2.23): anchored, bounded reconstruction
-          stage_t=1  mutation (Eq. 2.24-2.26): wider, less constrained
+          stage_t=0  genesis  (Eq. 2.11-2.12): anchored, bounded reconstruction
+          stage_t=1  mutation (Eq. 2.13-2.14): wider, less constrained
                      exploration -- may leave the admissible region G(C)
-          stage_t=2  repair    (Eq. 2.27-2.28): projection back toward the
+          stage_t=2  repair    (Eq. 2.15): projection back toward the
                      admissible region's center -- "improvement over time"
                      is a measured recovery in admissibility, not an
                      asserted property
@@ -269,7 +269,7 @@ def generate_domain_dataset(
         u = proj + rng.normal(0, trace_noise, size=config.raw_trace_dim)
 
         # The protected trace u is the DNA-level view of the cross-layer
-        # coherence proxy (Eq. 2.59). It is recorded here only; no random
+        # coherence proxy (Eq. 2.25). It is recorded here only; no random
         # draw is added, so scenarios.csv remains bit-identical.
         if trace_sink is not None:
             trace_sink.append(
@@ -363,4 +363,4 @@ if __name__ == "__main__":
         expected = RLV_PI[c]
         print(f"{c:15s} realized_dom={np.round(realized_dom,3)}  pi(c)={np.round(expected,3)}")
 
-    print("\nSaved: ../scenarios.csv, ../pi_lookup.csv")
+    print(f"\nSaved: {OUT}raw_traces.csv, {OUT}scenarios.csv, {OUT}pi_lookup.csv")

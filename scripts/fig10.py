@@ -1,7 +1,7 @@
 import matplotlib; matplotlib.use("Agg")
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
-lv=pd.read_csv("lime_vs_shapley.csv"); gm=pd.read_csv("shapley_geometry.csv")
+lv=pd.read_csv("../data/lime_vs_shapley.csv"); gm=pd.read_csv("../data/shapley_geometry.csv")
 INK="#1F3864"; ACC="#C55A11"; BK="#000000"; GRN="#2E7D32"
 MM=1/25.4
 fig=plt.figure(figsize=(184.6*MM,68.8*MM),dpi=600)

@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+data/multiseed/scenarios_seed*.csv
+data/multiseed/raw_traces_seed*.csv
+.DS_Store

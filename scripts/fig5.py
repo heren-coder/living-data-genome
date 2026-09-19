@@ -25,9 +25,9 @@ def box(x0,x1,y0,y1,title,sub=None,ec=INK,ts=7.2,ss=6.3,r=1.4):
     cx,cy=(x0+x1)/2,(y0+y1)/2
     if sub:
         ns=sub.count("\n")+1
-        ax.text(cx,cy+1.2*ns+1.0,title,ha="center",va="center",fontsize=ts,color=ec,
+        ax.text(cx,cy+1.05*ns+0.9,title,ha="center",va="center",fontsize=ts,color=ec,
                 fontweight="bold",zorder=3)
-        ax.text(cx,cy-1.6-0.2*ns,sub,ha="center",va="center",fontsize=ss,color=SUB,
+        ax.text(cx,cy-1.4-0.25*ns,sub,ha="center",va="center",fontsize=ss,color=SUB,
                 zorder=3,linespacing=1.28)
     else:
         ax.text(cx,cy,title,ha="center",va="center",fontsize=ts,color=ec,
@@ -99,11 +99,11 @@ ax.add_line(Line2D([140,166],[76.5,76.5],color=SUB,linewidth=1.0,zorder=5))
 arrow(140,76.5,140,72.0,c=SUB); arrow(166,76.5,166,72.0,c=ACC)
 ax.text(137.6,74.6,"0",ha="right",va="center",fontsize=6.2,color=SUB,fontweight="bold")
 ax.text(168.4,74.6,"1",ha="left",va="center",fontsize=6.2,color=ACC,fontweight="bold")
-box(128,152,60.0,72.0,"Retain","the artifact remains\nvalid; no lineage\nevent is recorded",ts=6.8,ss=5.8)
-box(155,178,60.0,72.0,"Revoke","apoptosis: invalidated,\nhistory preserved\nwrites: revoke",ec=ACC,ts=6.8,ss=5.8)
-arrow(166.5,60.0,166.5,55.0,c=SUB,ls=(0,(3,2)))
-box(128,178,43.0,55.0,"Regenerated successor","corrected and re-expressed, linked to the\npreserved lineage \u00b7 writes: regenerate",ec=GRN,ts=7.0,ss=6.0)
-ax.text(153,36.0,"the successor re-enters through the same\ngate that governed the original release",
+box(128,152,57.5,72.0,"Retain","the artifact remains\nvalid; no lineage\nevent is recorded",ts=6.8,ss=5.8)
+box(154,178.6,57.5,72.0,"Revoke","apoptosis: invalidated,\nhistory preserved\nwrites: revoke",ec=ACC,ts=6.8,ss=5.6)
+arrow(166.5,57.5,166.5,53.0,c=SUB,ls=(0,(3,2)))
+box(128,178.6,41.0,53.0,"Regenerated successor","corrected and re-expressed, linked to the\npreserved lineage \u00b7 writes: regenerate",ec=GRN,ts=7.0,ss=6.0)
+ax.text(153,34.5,"the successor re-enters through the same\ngate that governed the original release",
         ha="center",va="center",fontsize=6.3,color=SUB,style="italic",linespacing=1.3)
 
 # ---- lineage strip ----

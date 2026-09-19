@@ -1,7 +1,7 @@
 """
-Living Data Genome — Day 3-4
-Compute the four Rel components (Section 2.5.6 / 2.7) from the Day 1-2
-synthetic trajectories, and a simple supervised baseline for comparison.
+Living Data Genome — reliability components
+Compute the four Rel components (Section 2.5.6 / 2.7) from the
+synthetic trajectories written by generator.py, and a simple supervised baseline for comparison.
 
 Design notes:
   - A_triad: softened triadic alignment, Eq. (A2), instantiated through
@@ -19,7 +19,7 @@ Design notes:
   - GC: governance coherence is intentionally left at a neutral placeholder
     (GC=1.0) in this script. No certified governance events (contest /
     revoke / regenerate) exist yet in the data -- those are introduced in
-    the Day 5 governance-sequence demo, at which point GC becomes a
+    the governance-sequence demonstration (day5_governance.py), at which point GC becomes a
     non-trivial, measured quantity. This is stated explicitly rather than
     silently assumed.
   - Baseline: a plain logistic-regression classifier trained to predict

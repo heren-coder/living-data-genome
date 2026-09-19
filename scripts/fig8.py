@@ -2,7 +2,6 @@ import os as _os, sys as _sys
 _HERE = _os.path.dirname(_os.path.abspath(__file__))
 _sys.path.insert(0, _HERE)
 D = _os.path.join(_HERE, "..", "data") + _os.sep
-B = _os.path.join(_HERE, "..", "data") + _os.sep
 FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
 import matplotlib; matplotlib.use("Agg")
 import numpy as np, pandas as pd, sys
@@ -77,5 +76,5 @@ ax2.legend(fontsize=6.6,frameon=False,loc="lower right")
 ax2.set_title("All two hundred events: the dip at mutation and the recovery at repair, in both configurations",
               fontsize=7.4,color=INK,fontweight="bold",pad=6)
 fig.savefig(FIGDIR + "Figure_8.png",facecolor="white")
-print("olay:",ev,"aile:",len(fam))
-print("oranlar:",{k:[round(x,3) for x in v] for k,v in rates.items()})
+print("events:",ev,"families:",len(fam))
+print("rates:",{k:[round(x,3) for x in v] for k,v in rates.items()})

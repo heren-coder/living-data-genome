@@ -4,6 +4,17 @@ import matplotlib.patheffects as pe
 HALO=[pe.withStroke(linewidth=2.2,foreground="white")]
 from matplotlib.colors import LinearSegmentedColormap
 m=pd.read_csv("../data/operating_map.csv")
+# Declared agreement boundary: the same statistic the text and Table 6 report,
+# i.e. the CV=0.5 crossing interpolated on the 25-seed sweep of kappa_boundary.csv.
+# The band previously used the median across tightening columns of the first
+# grid point exceeding CV=0.5 on this figure's coarser 5-seed sweep, which is a
+# different statistic and gave a different number (17.5 / 20 against 16.3 / 17.0).
+_kb=pd.read_csv("../data/kappa_boundary.csv")
+def declared_boundary(dom):
+    k=_kb[_kb.domain==dom].sort_values("variance_pct")
+    cv,v=k.cv.values,k.variance_pct.values
+    i=next(j for j in range(len(cv)) if cv[j]>0.5)
+    return float(np.interp(0.5,[cv[i-1],cv[i]],[v[i-1],v[i]]))
 INK="#1F3864"; ACC="#C55A11"; BK="#000000"
 cmap=LinearSegmentedColormap.from_list("g",["#FFFFFF","#CBD9EC","#7FA6D0","#2F5C96","#12305C"])
 MM=1/25.4
@@ -21,8 +32,7 @@ for (x0,wd),dom in zip(LAY,["RLV","Healthcare"]):
     KS=s.pivot(index="variance_pct",columns="tightening",values="kappa_sd").values
     CV=KS/KM
     im=ax.pcolormesh(np.array(T),np.array(V),Z,cmap=cmap,vmin=0.0,vmax=0.55,shading="nearest")
-    cross=[V[np.where(CV[:,j]>0.5)[0][0]] for j in range(len(T)) if (CV[:,j]>0.5).any()]
-    vb=float(np.median(cross))
+    vb=declared_boundary(dom)
     ax.axhspan(vb,max(V)+1.5,facecolor=ACC,alpha=0.13,zorder=2)
     ax.axhline(vb,color=ACC,linewidth=1.4,linestyle=(0,(5,3)),zorder=3)
     ax.text(T[0]-0.002,vb-1.1,"agreement no longer stable",
@@ -66,5 +76,6 @@ fig.text(0.5,0.955,"one constant moves the gain and the other does not: the two 
          ha="center",fontsize=7.6,color="#0F2545",fontweight="bold")
 fig.text(0.5,0.045,"side strip: the gain along calibration variance at fixed tightening\nlower strip: the gain along tightening at the operating variance",
          ha="center",fontsize=6.5,color=BK,style="italic",linespacing=1.4)
+fig.text(0.012,0.965,"(b)",fontsize=8.2,color="#000000",fontweight="bold",va="top")
 fig.savefig("Figure_12.png",facecolor="white")
 print("ok")

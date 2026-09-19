@@ -36,16 +36,6 @@ TIGHTENING = 0.05
 TIGHTEN_GRID = [0.025, 0.050, 0.075, 0.100, 0.125, 0.150, 0.175, 0.200]
 CONFIG = [("RLV", RLV_CONFIG), ("Healthcare", HEALTHCARE_CONFIG)]
 
-# published Table 3.4, for the comparison printout
-PUBLISHED = {
-    "RLV": dict(revoke="0.307 +/- 0.039", redraw="0.044 +/- 0.048",
-                regen="0.862 +/- 0.046", relA="0.900",
-                relB="0.749 +/- 0.021", relC="0.890 +/- 0.002"),
-    "Healthcare": dict(revoke="0.305 +/- 0.015", redraw="0.057 +/- 0.025",
-                       regen="0.907 +/- 0.035", relA="0.913",
-                       relB="0.762 +/- 0.008", relC="0.907 +/- 0.003"),
-}
-
 
 def one_arm(sub, config, tightening, seed):
     """One governance pass. Representative artifact drawn at random per event."""
@@ -112,8 +102,7 @@ def main():
             ("Rel: discard", relB, "relB"),
             ("Rel: regenerate", relC, "relC"),
         ]:
-            print(f"  {label:<24} {arr.mean():.3f} +/- {arr.std(ddof=1):.3f}"
-                  f"    published {PUBLISHED[domain][key]}")
+            print(f"  {label:<24} {arr.mean():.3f} +/- {arr.std(ddof=1):.3f}")
 
         rows.append({
             "domain": domain, "n_seeds": len(SEEDS), "tightening": TIGHTENING,

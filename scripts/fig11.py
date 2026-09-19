@@ -2,7 +2,6 @@ import os as _os, sys as _sys
 _HERE = _os.path.dirname(_os.path.abspath(__file__))
 _sys.path.insert(0, _HERE)
 D = _os.path.join(_HERE, "..", "data") + _os.sep
-B = _os.path.join(_HERE, "..", "data") + _os.sep
 FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
 import matplotlib; matplotlib.use("Agg")
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
@@ -13,7 +12,7 @@ NAME={"RLV":{"S":"Speed","A":"Attention","D":"Density","E":"Environment"},
       "Healthcare":{"S":"Access escalation","A":"Audit coverage",
                     "D":"Record density","E":"Access control"}}
 OFF={"RLV":{"D":(10,4,"left"),"S":(-8,-16,"right"),"A":(10,2,"left"),"E":(2,-18,"center")},
-     "Healthcare":{"S":(10,4,"left"),"A":(-8,-16,"right"),"D":(10,-6,"left"),"E":(10,4,"left")}}
+     "Healthcare":{"S":(-8,-16,"right"),"A":(-8,-16,"right"),"D":(10,-6,"left"),"E":(10,4,"left")}}
 MM=1/25.4
 fig=plt.figure(figsize=(184.6*MM,67.9*MM),dpi=600)
 axes=[fig.add_axes([0.085,0.200,0.375,0.560]),fig.add_axes([0.585,0.200,0.375,0.560])]
@@ -42,5 +41,6 @@ fig.text(0.5,0.937,"dropping a gene inflates survival and costs alignment; only 
          ha="center",fontsize=7.4,color="#0F2545",fontweight="bold")
 fig.text(0.5,0.045,"filled markers survive the Holm correction across the sixteen tests; orange marks the gene whose removal lowers the aggregate",
          ha="center",fontsize=6.6,color=BK,style="italic")
+fig.text(0.012,0.965,"(a)",fontsize=8.2,color="#000000",fontweight="bold",va="top")
 fig.savefig(FIGDIR + "Figure_11.png",facecolor="white")
 print("ok")

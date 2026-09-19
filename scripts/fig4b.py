@@ -33,12 +33,12 @@ def scene(cx,cy,exact):
     ax.text(cx-15.0,cy+15.4,"G(C⁺)",ha="left",va="center",fontsize=6.6,color=ACC,style="italic")
     c=np.array([cx,cy],float)
     if exact:
-        g0=np.array([cx-9.0,cy-4.0]); g1=np.array([cx+22.0,cy+8.0])
-        g2=np.array([cx+16.0,cy+8.0])
+        g0=np.array([cx-9.0,cy-4.0]); g1=np.array([cx+20.5,cy+8.0])
+        g2=np.array([cx+14.5,cy+8.0])
     else:
         g0=np.array([cx+15.0,cy+7.0]); g1=np.array([cx+19.5,cy+9.5])
         g2=g1+0.30*(c-g1)
-    node(g0,"genesis",0.0,-4.0); node(g1,"mutation",0.0,4.2); node(g2,"repair",-7.6,3.4)
+    node(g0,"genesis",0.0,-4.0); node(g1,"mutation",-1.0,4.8); node(g2,"repair",-10.5,2.4)
     arrow(g0,g1,INK,1.0); arrow(g1,g2,ACC,1.2)
     dm=float(np.linalg.norm(g1-g0)); dr=float(np.linalg.norm(g2-g1))
     return dm,dr
@@ -71,8 +71,9 @@ arrow(g0,g1,INK,1.0); arrow(g1,g2,ACC,1.3)
 dm2=float(_np.linalg.norm(g1-g0))/K; dr2=float(_np.linalg.norm(g2-g1))/K
 ax.text(138,20.0,"mutation step shorter than the repair step",ha="center",va="center",
         fontsize=6.6,color=ACC,fontweight="bold")
-ax.text(138,12.6,"the implemented operator pulls a fixed fraction toward the centre, so a\n"
-        "short mutation can be followed by a longer correction, as for one candidate in six",
+ax.text(137.8,12.0,"the implemented operator pulls a fixed fraction toward the centre,\n"
+        "so a short mutation can be followed by a longer correction,\n"
+        "as it is for roughly one candidate in six",
         ha="center",va="center",fontsize=6.2,color=SUB,linespacing=1.35)
 fig.savefig("Figure_4.png",facecolor="white")
 print("ok")

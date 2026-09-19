@@ -2,7 +2,6 @@ import os as _os, sys as _sys
 _HERE = _os.path.dirname(_os.path.abspath(__file__))
 _sys.path.insert(0, _HERE)
 D = _os.path.join(_HERE, "..", "data") + _os.sep
-B = _os.path.join(_HERE, "..", "data") + _os.sep
 FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
 import matplotlib; matplotlib.use("Agg")
 import numpy as np, pandas as pd, sys
@@ -14,8 +13,8 @@ G=['g_S','g_A','g_D','g_E']
 INK="#1F3864"; ACC="#C55A11"; GRN="#2E7D32"; SUB="#1A1A1A"
 MM=1/25.4
 fig=plt.figure(figsize=(184.6*MM,73.1*MM),dpi=600)
-axes=[fig.add_axes([0.075,0.215,0.255,0.520]),
-      fig.add_axes([0.385,0.215,0.255,0.520]),
+axes=[fig.add_axes([0.075,0.215,0.235,0.520]),
+      fig.add_axes([0.405,0.215,0.235,0.520]),
       fig.add_axes([0.735,0.215,0.245,0.560])]
 CKA={}
 for ax,(dom,cfg) in zip(axes[:2],[("RLV",R),("Healthcare",H)]):

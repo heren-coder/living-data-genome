@@ -1,0 +1,9 @@
+Quantity,RLV,Healthcare
+"Ledger cost at 6 / 1,024 / 262,144 events",,
+"Signed event record, mean size",411 B,
+Merkle depth,3 / 10 / 18,
+Inclusion proof size,96 / 320 / 576 B,
+Append one event,under 20 µs at every scale,
+Inclusion proof verification,under 20 µs at every scale,
+Batch rebuild of the whole tree,under 1 s,
+Full chain verification,under 1 s,

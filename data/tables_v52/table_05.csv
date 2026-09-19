@@ -1,0 +1,19 @@
+Quantity,RLV (five seeds),Healthcare (five seeds),RLV (50 draws),Healthcare (50 draws)
+Revoke rate,0.294 ± 0.032,0.322 ± 0.019,,
+Random-redraw success rate,0.051 ± 0.020,0.041 ± 0.033,,
+Governed regeneration success rate,0.854 ± 0.044,0.867 ± 0.045,,
+Governance coherence: baseline,1.000,1.000,,
+Governance coherence: discard,0.706 ± 0.032,0.678 ± 0.019,,
+Governance coherence: regenerate,1.000,1.000,,
+Reliability: baseline (generation 1),0.900,0.913,,
+Reliability: discard (counterfactual),0.756 ± 0.017,0.752 ± 0.010,,
+Reliability: regenerate (this framework),0.890 ± 0.003,0.903 ± 0.003,,
+"Fifty generator draws, mean [95% CI]",,,,
+Revoke rate,,,"0.295 [0.283, 0.307]","0.296 [0.286, 0.306]"
+Random-redraw success,,,"0.048 [0.040, 0.055]","0.050 [0.043, 0.057]"
+Governed regeneration success,,,"0.880 [0.868, 0.892]","0.883 [0.871, 0.895]"
+Governance coherence: discard,,,"0.705 [0.693, 0.717]","0.704 [0.694, 0.714]"
+Rel: baseline,,,"0.895 [0.893, 0.897]","0.900 [0.898, 0.902]"
+Rel: discard,,,"0.751 [0.744, 0.759]","0.755 [0.749, 0.761]"
+Rel: regenerate,,,"0.887 [0.885, 0.890]","0.892 [0.889, 0.894]"
+Gain regenerate - discard,,,"0.136 [0.130, 0.141]","0.137 [0.132, 0.142]"

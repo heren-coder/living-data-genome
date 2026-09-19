@@ -1,0 +1,21 @@
+Quantity,RLV,Healthcare
+"Reliability components (pool means, single pass)",,
+Triadic alignment,0.714,0.758
+"Transition stability, genesis to mutation",0.879,0.880
+"Transition stability, mutation to repair",0.955,0.955
+"Admissibility survival, repair stage",0.870,0.849
+"Governance coherence, measured in Section 3.6",0.717,0.736
+Aggregate,,
+"Reliability, measured governance coherence",0.800,0.812
+"Reliability, idealized lineage",0.869,0.877
+"Reliability, idealized, per-event route, mean [bootstrap 95% CI over events]","0.857 [0.841, 0.870]","0.861 [0.842, 0.877]"
+"Reliability, idealized lineage, 50 generator draws, mean [95% CI]","0.861 [0.858, 0.864]","0.857 [0.854, 0.860]"
+"Reliability, measured governance coherence, 50 generator draws, mean [95% CI]","0.789 [0.783, 0.794]","0.785 [0.780, 0.790]"
+"Cross-layer level CL_lev, Equation (2.16); diagnostic, outside the aggregate",0.715,0.754
+"Cross-layer level CL_lev, 50 generator draws, mean [95% CI]","0.704 [0.673, 0.738]","0.720 [0.677, 0.751]"
+"Cross-layer balance CL_bal, Equation (2.16)",0.834,0.869
+"Cross-layer balance CL_bal, 50 generator draws, mean [95% CI]","0.826 [0.761, 0.877]","0.838 [0.773, 0.881]"
+"Coherence flag Coh, Equation (2.17), tau_lev = 0.70, tau_bal = 0.80",coherent,coherent
+Supervised baseline (five seeds),,
+Balanced accuracy,0.595 ± 0.048,0.553 ± 0.035
+F1,0.726 ± 0.027,0.691 ± 0.031

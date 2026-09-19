@@ -1,0 +1,9 @@
+Quantity,RLV,Healthcare
+Misrouting cost (matched counterfactual),,
+Misrouted candidates,80,88
+Misrouted share of corrupted,0.012,0.015
+Matched pairs at saturation,32,32
+Correction forfeited,41.8%,73.0%
+Left worse than before repair,9.4%,25.0%
+"Cost, median",+0.0040,+0.0244
+"Cost positive, fraction",1.00,1.00

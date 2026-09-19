@@ -1,0 +1,13 @@
+Quantity,RLV,Healthcare
+"Federated agreement (four nodes, 150 shared candidates, 5 percent relative calibration variance)",,
+Agreement coefficient,0.879 ± 0.041,0.877 ± 0.061
+Unanimous agreement rate,0.928 ± 0.022,0.920 ± 0.039
+Mean admissible rate across nodes,0.795,0.778
+Boundary at which the estimate ceases to be stable,16.3%,17.0%
+Permissioned Merkle ledger (illustrative six-event lifecycle),,
+Chain valid before and after tamper,"true / false, detected at block 3",
+Merkle root changed by tamper,true,
+"Quorum required (four nodes, one tolerated fault)",three of four,
+Commit with four honest attestations,committed,
+Commit with one Byzantine node,committed,
+Commit with two faulty nodes,rejected,

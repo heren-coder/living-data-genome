@@ -8,12 +8,9 @@ import os as _os, sys as _sys
 _HERE = _os.path.dirname(_os.path.abspath(__file__))
 _sys.path.insert(0, _HERE)
 D = _os.path.join(_HERE, "..", "data") + _os.sep
-B = _os.path.join(_HERE, "..", "data") + _os.sep
-FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
 import pandas as pd
 import day6_ectopic_mislabel as M
 
-import day6_ectopic_mislabel as M
 GRID = [5, 10, 20, 40, 80, 150, 250, 400]
 
 df  = pd.read_csv(D + "scenarios.csv")

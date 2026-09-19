@@ -1,19 +1,21 @@
 """
-Living Data Genome — Day 1-2
+Living Data Genome — scenario generator
 Domain-agnostic synthetic scenario generator + simplified 4-gene mapping.
 
-Design goals (per karar özeti madde 3 & 5):
+Design goals:
   - Domain-agnostic core: the SAME generator code drives both the RLV testbed
     and the healthcare access-governance vignette (Section 4.8), via a
     DomainConfig object. Nothing RLV-specific is hardcoded in the core.
   - Simplified trace-to-gene proxy Pi(.) : MLP + LoRA-style context-conditioned
-    adaptation, standing in for the full Transformer+LoRA method hook (Table 2.1).
+    adaptation. It is untrained, and it stands in for a transformer-based
+    encoder (Vaswani et al., 2017) only in the architectural sense of a
+    shared base map specialized per context through a low-rank correction.
   - Bounded genesis: each incident produces a FAMILY of K admissible candidate
     seeds (Eq. 2.12), not a single point — needed later for SR (survival rate)
     and ablation.
   - context_label (c) is attached to every event from the start (cannot be
     added retroactively — needed for Section 2.5.7 ectopic-expression screening
-    in Day 5).
+    by day5_ectopic.py).
   - pi(c): protocol-declared (not learned) expected gene-dominance profile per
     context, used later to compute Xi_i,t(c) (Eq. A14).
 """
@@ -104,11 +106,9 @@ RLV_CONFIG = DomainConfig(
 
 
 # --- Healthcare access-governance domain (Section 4.8) ----------------------
-# Framed per the FÜBAP project's own "Sağlık Senaryosu: erişim ve
-# açıklanabilirlik" theme, but expressed purely in Living Data Genome's own
-# vocabulary (gene coordinates, admissibility, context-mismatch) — no SHAP,
-# no quantum-Bayesian risk, no blockchain-architecture terms, per the
-# deliberate terminology separation agreed in the decision log.
+# Healthcare access-governance configuration, expressed in the framework's own
+# vocabulary (gene coordinates, admissibility, context mismatch) rather than in
+# domain-specific risk or architecture terms.
 
 HC_CONTEXTS = ["high_load_daytime", "low_load_daytime", "high_load_nighttime", "low_load_nighttime"]
 
@@ -153,7 +153,8 @@ HEALTHCARE_CONFIG = DomainConfig(
 
 # ---------------------------------------------------------------------------
 # 2. Simplified trace-to-gene proxy: MLP + LoRA-style context adaptation
-#    (stands in for the Transformer+LoRA method hook, Table 2.1)
+#    (untrained; stands in for a transformer-based encoder in the
+#    architectural sense only)
 # ---------------------------------------------------------------------------
 
 class TraceToGeneEncoder:
@@ -164,8 +165,11 @@ class TraceToGeneEncoder:
     mean (so that dominance patterns remain generally consistent with the
     declared context, as expected by a well-behaved proxy operator), and the
     MLP + LoRA-style context adaptation contributes a *bounded correction*
-    on top of that anchor — standing in for the Transformer+LoRA method hook
-    (Table 2.1) refining the raw proxy rather than replacing it outright.
+    on top of that anchor, refining the raw proxy rather than replacing it
+    outright. It stands in for a transformer-based encoder in the
+    architectural sense only (Section 3.12
+    measures the dependence on that choice). The encoder is untrained: its weights are drawn once from a fixed
+    seed and never updated.
     A minority of candidates will still drift enough (via mutation jitter,
     downstream) to be flagged by the context-mismatch screening in
     Section 2.5.7 — this is intentional, not a bug.
@@ -199,7 +203,7 @@ class TraceToGeneEncoder:
 #    This is what makes the "lifecycle" claim operational rather than
 #    asserted: repair's effect (recovering admissibility lost during
 #    mutation) becomes a MEASURABLE property of the generated data, checked
-#    in Day 3-4, rather than a name attached to unchanging data.
+#    by rel_computation.py, rather than a name attached to unchanging data.
 # ---------------------------------------------------------------------------
 
 def generate_domain_dataset(
@@ -321,7 +325,7 @@ def generate_domain_dataset(
 
 
 def pi_lookup_frame(config: DomainConfig) -> pd.DataFrame:
-    """Return pi(c) as a tidy dataframe for later Xi_i,t(c) computation (Day 5)."""
+    """Return pi(c) as a tidy dataframe for the Xi_i,t(c) computation of day5_ectopic.py."""
     rows = []
     for c, vec in config.pi.items():
         rows.append({"domain": config.name, "context_label": c,

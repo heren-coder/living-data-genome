@@ -3,14 +3,10 @@ import os as _os, sys as _sys
 _HERE = _os.path.dirname(_os.path.abspath(__file__))
 _sys.path.insert(0, _HERE)
 D = _os.path.join(_HERE, "..", "data") + _os.sep
-B = _os.path.join(_HERE, "..", "data") + _os.sep
-FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
 import itertools, numpy as np, pandas as pd
 from math import factorial
 from generator import RLV_CONFIG, HEALTHCARE_CONFIG, RNG_SEED
 
-from math import factorial
-from generator import RLV_CONFIG, HEALTHCARE_CONFIG, RNG_SEED
 CFG={"RLV":RLV_CONFIG,"Healthcare":HEALTHCARE_CONFIG}
 QMIN, TAU, STS = 0.50, 0.90, 8.0
 NBG=256
@@ -75,5 +71,5 @@ print(out.to_string(index=False))
 print()
 for dom in ["RLV","Healthcare"]:
     s=out[out.domain==dom]
-    print(f"{dom}: havuz referansi baglam ici tepe payi {s.pool_ref_modal_share.min():.3f}-{s.pool_ref_modal_share.max():.3f}"
-          f" | yerel referans {s.local_ref_modal_share.min():.3f}-{s.local_ref_modal_share.max():.3f}")
+    print(f"{dom}: pooled reference, within-context modal share {s.pool_ref_modal_share.min():.3f}-{s.pool_ref_modal_share.max():.3f}"
+          f" | local reference {s.local_ref_modal_share.min():.3f}-{s.local_ref_modal_share.max():.3f}")

@@ -1,0 +1,7 @@
+domain,rule,xi,ci_lo,ci_hi,basis
+Healthcare,xi_youden,0.029677944862155387,0.02763308270676692,0.031772681704260654,mean Youden point over calibration datasets
+Healthcare,xi_fa5,0.043593083641170954,0.04052997269687226,0.04653940263076328,95th percentile of null divergence (false-flag-controlled)
+Healthcare,xi_decl,0.03,,,submitted value
+RLV,xi_youden,0.02828145363408522,0.02613684210526316,0.030426065162907273,mean Youden point over calibration datasets
+RLV,xi_fa5,0.0456535860570422,0.043700288968622596,0.047656898261359104,95th percentile of null divergence (false-flag-controlled)
+RLV,xi_decl,0.03,,,submitted value

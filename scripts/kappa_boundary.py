@@ -4,8 +4,6 @@ import os as _os, sys as _sys
 _HERE = _os.path.dirname(_os.path.abspath(__file__))
 _sys.path.insert(0, _HERE)
 D = _os.path.join(_HERE, "..", "data") + _os.sep
-B = _os.path.join(_HERE, "..", "data") + _os.sep
-FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
 import numpy as np, pandas as pd
 from generator import RLV_CONFIG, HEALTHCARE_CONFIG, RNG_SEED
 
@@ -57,11 +55,11 @@ def boundary(sub):
     if j==0: return float(v[0])
     return float(np.interp(0.5,[c[j-1],c[j]],[v[j-1],v[j]]))
 
-print("\n=== sinir, 25 tohum ===")
+print("\n=== boundary, 25 seeds ===")
 for dom in CFG:
     print(f"  {dom}: {boundary(out[out.domain==dom]):.1f}%")
 
-print("\n=== ikinci kontrol: sinirin tohum sayisina duyarliligi ===")
+print("\n=== second check: sensitivity of the boundary to the number of seeds ===")
 chk=[]
 for dom in CFG:
     s=out[out.domain==dom]

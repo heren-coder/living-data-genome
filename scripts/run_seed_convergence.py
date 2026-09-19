@@ -6,7 +6,7 @@ draw. This script shows that rather than asserting it: the reliability contract 
 recomputed under four hundred seeds and the running mean and interval are recorded
 at increasing subset sizes. Writes seeds400.csv and seed_convergence.csv.
 """
-import sys, json, platform, numpy as np, pandas as pd
+import sys, numpy as np, pandas as pd
 sys.path.insert(0, ".")
 from generator import RLV_CONFIG, HEALTHCARE_CONFIG, RNG_SEED
 import rel_computation as R
@@ -45,9 +45,5 @@ for dom in CFG:
                              vmin=float(v.min()), vmax=float(v.max())))
 c = pd.DataFrame(conv)
 c.to_csv("../data/seed_convergence.csv", index=False)
-
-json.dump({"python": platform.python_version(), "numpy": np.__version__,
-           "pandas": pd.__version__, "platform": platform.platform(),
-           "n_seeds": N_SEEDS}, open("../data/env.json", "w"), indent=2)
 
 print(c[c.metric == "rel"].round(4).to_string(index=False))

@@ -22,11 +22,11 @@ cv = pd.read_csv("../data/seed_convergence.csv")
 
 INK = "#1F3864"; ACC = "#C55A11"; BK = "#000000"
 MM = 1 / 25.4
-TRIM_TOP, TRIM_BOTTOM = 122, 29          # to the embedded height of 1195 px
+TRIM_TOP, TRIM_BOTTOM = 55, 40          # to the embedded height of 1195 px
 OUT = "Figure_15.png"
 
 fig = plt.figure(figsize=(184.6 * MM, 57 * MM), dpi=600)
-W, Y, H = 0.175, 0.255, 0.520
+W, Y, H = 0.175, 0.315, 0.500
 a1 = fig.add_axes([0.058, Y, W, H])
 a2 = fig.add_axes([0.303, Y, W, H])
 a3 = fig.add_axes([0.548, Y, W, H])
@@ -72,12 +72,13 @@ for a in (a1, a2, a3, a4):
         a.spines[sp].set_visible(False)
     a.spines["left"].set_color(BK); a.spines["bottom"].set_color(BK)
 
-fig.text(0.42, 0.045,
-         "beyond eighty seed runs the shaded region adds no new case and moves no reported quantity;"
-         "  the right panel shows the 95% interval of the aggregate over four hundred seeds",
-         ha="center", fontsize=5.9, color=BK, style="italic")
+fig.text(0.5, 0.036,
+         "beyond eighty seed runs the shaded region adds no new case and moves no reported quantity;\n"
+         "the right panel shows the 95% interval of the aggregate over four hundred seeds",
+         ha="center", va="bottom", fontsize=6.0, color=BK, style="italic", linespacing=1.3)
 
 fig.savefig(OUT, facecolor="white")
+from PIL import Image
 plt.close(fig)
 
 # Crop to the embedded size, and refuse to clip content rather than doing it silently.

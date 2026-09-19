@@ -1,7 +1,7 @@
 """
-Living Data Genome -- Day 5, part 3: governance sequence demonstration.
+Living Data Genome -- governance sequence demonstration.
 
-Three-arm design, per the decision log:
+Three-arm design:
   A) Baseline (generation 1)  -- repair-stage admissible artifacts, no
      institutional update applied.
   B) Discard (counterfactual) -- a tightened constraint regime C+ is applied

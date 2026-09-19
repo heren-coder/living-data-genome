@@ -9,8 +9,6 @@ import os as _os, sys as _sys
 _HERE = _os.path.dirname(_os.path.abspath(__file__))
 _sys.path.insert(0, _HERE)
 D = _os.path.join(_HERE, "..", "data") + _os.sep
-B = _os.path.join(_HERE, "..", "data") + _os.sep
-FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
 import numpy as np, pandas as pd
 from generator import RLV_CONFIG, HEALTHCARE_CONFIG
 import rel_computation as R

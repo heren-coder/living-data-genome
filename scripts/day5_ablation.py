@@ -1,5 +1,5 @@
 """
-Living Data Genome -- Day 5, part 1: gene ablation.
+Living Data Genome -- gene ablation.
 
 For each of the four genes {S, A, D, E} in turn, the gene is "ablated"
 (dropped from the representation / admissibility test / classifier

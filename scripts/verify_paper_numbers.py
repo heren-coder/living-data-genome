@@ -54,6 +54,9 @@ for dom,(rv,rd,rg,rb,rdi,rre) in {"RLV":(0.294,0.051,0.854,0.900,0.756,0.890),
     chk(f"3.4 Rel baseline [{dom}]",      gm.loc[dom,"Rel_baseline_mean"], rb, 0.001)
     chk(f"3.4 Rel discard [{dom}]",       gm.loc[dom,"Rel_discard_mean"], rdi, 0.001)
     chk(f"3.4 Rel regenerate [{dom}]",    gm.loc[dom,"Rel_regenerate_mean"], rre, 0.001)
+for dom,(gcm,gcs) in {"RLV":(0.706,0.032),"Healthcare":(0.678,0.019)}.items():
+    chk(f"Table 5 coherence discard, five seeds [{dom}]", gm.loc[dom,"GC_discard_mean"], gcm, 0.0005)
+    chk(f"Table 5 coherence discard SD [{dom}]",          gm.loc[dom,"GC_discard_sd"],   gcs, 0.0005)
 nn=pd.read_csv(D+"sweep_node_noise.csv"); nn=nn[nn.relative_variance_pct==5].set_index("domain")
 for dom,(k,u,a) in {"RLV":(0.879,0.928,0.795),"Healthcare":(0.877,0.920,0.778)}.items():
     chk(f"3.5 Fleiss kappa [{dom}]",  nn.loc[dom,"fleiss_kappa_mean"],   k, 0.001)
@@ -170,5 +173,99 @@ for dom in ("RLV", "Healthcare"):
     c400 = cv[(cv.domain == dom) & (cv.metric == "rel") & (cv.n_seeds == 400)]["mean"].iloc[0]
     chk(f"3.12 five vs four hundred seeds [{dom}]", abs(float(c5 - c400)), 0.0, 0.0012)
 
-print("\nALL CHECKS PASSED" if ok else "\nMISMATCH")
-sys.exit(0 if ok else 1)
+
+# ---------------------------------------------------------------- v1.3.0 (revision v52): generator-level uncertainty
+# Labels give the v52 table/section; the checks above keep their v51 labels (v51->v52 table map: 5->3, 6->4, 7->5, 8->6, 9->7, 10->8, 11->9, 13->10, 14->11, 15->12; see README).
+M = D + "multiseed/"
+try:
+    rs = pd.read_csv(M + "rel_multiseed_summary.csv").set_index("domain")
+    for dom, want in {"RLV": 0.846, "Healthcare": 0.836}.items():
+        chk(f"Rel per-event mean over 50 draws [{dom}]", rs.loc[dom, "Rel_mean_mean"], want, 0.002)
+    # Table 3 reports both aggregate rows on the component route (weighted geometric
+    # mean of the per-draw component means), so that idealized and measured are
+    # comparable and their difference is the governance contribution alone.
+    _rm = pd.read_csv(M + "rel_multiseed.csv").set_index(["k", "domain"])
+    _gv = pd.read_csv(M + "governance_multiseed50.csv").set_index(["k", "domain"])
+    for dom, (wi, wm) in {"RLV": (0.861, 0.789), "Healthcare": (0.857, 0.785)}.items():
+        _a = _rm.xs(dom, level=1); _g = _gv.xs(dom, level=1).loc[_a.index]
+        _base = (_a.A_triad * _a.TS_mean * _a.SR_mean) ** 0.25
+        _meas = (_a.A_triad * _a.TS_mean * _a.SR_mean * _g.GC_discard) ** 0.25
+        chk(f"Table 3 (v52) Rel idealized, 50 draws [{dom}]", _base.mean(), wi, 0.002)
+        chk(f"Table 3 (v52) Rel measured, 50 draws [{dom}]", _meas.mean(), wm, 0.002)
+        chk(f"Sec 3.3 governance contribution [{dom}]", _base.mean() - _meas.mean(), 0.072, 0.002)
+    # Single-file rows of Table 3: measured and idealized on the component route,
+    # the per-event mean on its own labelled row.
+    _rs1 = pd.read_csv(D + "rel_summary.csv").set_index("domain")
+    _gd1 = pd.read_csv(D + "governance_demo_results.csv").set_index("domain")
+    for dom, (si, sm, pe) in {"RLV": (0.869, 0.800, 0.857), "Healthcare": (0.877, 0.812, 0.861)}.items():
+        _b1 = (_rs1.loc[dom, "A_triad"] * _rs1.loc[dom, "TS_mean"] * _rs1.loc[dom, "SR_mean"]) ** 0.25
+        chk(f"Table 3 single file Rel idealized, component route [{dom}]", _b1, si, 0.0015)
+        chk(f"Table 3 single file Rel measured, component route [{dom}]", _b1 * _gd1.loc[dom, "GC_discard"] ** 0.25, sm, 0.0015)
+        chk(f"Table 3 single file Rel idealized, per-event route [{dom}]", _rs1.loc[dom, "Rel_mean"], pe, 0.0015)
+    gv = pd.read_csv(M + "governance_multiseed50_summary.csv").set_index("domain")
+    for dom, (rr, rg, gap) in {"RLV": (0.295, 0.880, 0.136), "Healthcare": (0.296, 0.883, 0.137)}.items():
+        chk(f"Table 5 (v52) revoke rate, 50 draws [{dom}]", gv.loc[dom, "revoke_rate_mean"], rr, 0.003)
+        chk(f"Table 5 (v52) regeneration success [{dom}]", gv.loc[dom, "regeneration_success_rate_mean"], rg, 0.003)
+        chk(f"Table 5 (v52) gain regen-discard [{dom}]", gv.loc[dom, "Rel_gap_regen_minus_discard_mean"], gap, 0.002)
+    ru = pd.read_csv(M + "xi_rules.csv"); ev = pd.read_csv(M + "xi_evaluation.csv")
+    for dom, want in {"RLV": 0.028, "Healthcare": 0.030}.items():
+        chk(f"Sec 3.8 xi_youden, calibration draws [{dom}]", ru[(ru.domain == dom) & (ru.rule == "xi_youden")].xi.iloc[0], want, 0.0015)
+    for dom, (det, fa) in {"RLV": (0.767, 0.177), "Healthcare": (0.827, 0.118)}.items():
+        e = ev[(ev.domain == dom) & (ev.rule == "xi_decl")].iloc[0]
+        chk(f"Sec 3.8 held-out detection [{dom}]", e.detection_mean, det, 0.003); chk(f"Sec 3.8 held-out false flag [{dom}]", e.false_flag_mean, fa, 0.003)
+    fl = pd.read_csv(M + "sr_floor_eps_sweep.csv")
+    for dom, want in {"RLV": 0.0004, "Healthcare": 0.0006}.items():
+        chk(f"Sec 3.12 floor effect on mean Rel [{dom}]", fl[(fl.domain == dom) & (fl.eps == 1e-6)].dev_mean.iloc[0], want, 0.0002)
+    at = pd.read_csv(M + "attribution_matched_summary.csv")
+    for dom, (sl, lp) in {"RLV": (0.847, 0.277), "Healthcare": (0.866, 0.276)}.items():
+        chk(f"Sec 3.4.1 Shapley local vs probe [{dom}]", at[(at.domain == dom) & (at.method == "shapley") & (at.reference == "local")].agreement_mean.iloc[0], sl, 0.005)
+        chk(f"Sec 3.4.1 surrogate pool vs probe [{dom}]", at[(at.domain == dom) & (at.method == "lime") & (at.reference == "pool")].agreement_mean.iloc[0], lp, 0.005)
+    # ---- v1.3.2: cross-layer proxy over 50 draws and across the validity arms
+    cx = pd.read_csv(M + "cross_layer_multiseed_summary.csv").set_index("domain")
+    for dom, (lev, bal, coh) in {"RLV": (0.704, 0.826, 0.52), "Healthcare": (0.720, 0.838, 0.76)}.items():
+        chk(f"Sec 2.8 CL_lev, 50 draws [{dom}]", cx.loc[dom, "CL_lev_mean"], lev, 0.002)
+        chk(f"Sec 2.8 CL_bal, 50 draws [{dom}]", cx.loc[dom, "CL_bal_mean"], bal, 0.002)
+        chk(f"Sec 2.8 coherence-flag rate [{dom}]", cx.loc[dom, "Coh_rate"], coh, 0.02)
+    ca = pd.read_csv(M + "cross_layer_arms.csv").set_index(["domain", "arm"])
+    for dom, (mis, rel) in {"RLV": (-0.309, -0.119), "Healthcare": (-0.338, -0.101)}.items():
+        chk(f"Sec 2.8 arm misalignment dCL_lev [{dom}]", ca.loc[(dom, "misalignment"), "dCL_lev"], mis, 0.003)
+        chk(f"Sec 2.8 arm releasability dCL_lev [{dom}]", ca.loc[(dom, "releasability"), "dCL_lev"], rel, 0.003)
+        for a in ["candidate order", "quality scale", "instability"]:
+            chk(f"Sec 2.8 arm {a} dCL_lev is zero [{dom}]", ca.loc[(dom, a), "dCL_lev"], 0.0, 0.0005)
+    pa = pd.read_csv(M + "proxy_arch_sweep_summary.csv")
+    # Table 9, every printed cell: (dRel mean, lo, hi) per domain, dSR (RLV, HC), gate agreement (RLV, HC);
+    # compared after formatting to the three decimals the table prints
+    pa = pa.set_index(["arm", "domain"])
+    T9 = {"mlp1_relu": ((0.008, 0.006, 0.010), (0.005, 0.003, 0.007), (0.013, 0.010), (0.964, 0.965)),
+          "mlp2_tanh": ((0.008, 0.004, 0.013), (0.004, -0.001, 0.009), (0.014, 0.008), (0.908, 0.906)),
+          "mlp1_s009": ((0.010, 0.008, 0.012), (0.010, 0.008, 0.012), (0.019, 0.019), (0.960, 0.959)),
+          "mlp1_s036": ((-0.041, -0.047, -0.036), (-0.038, -0.044, -0.031), (-0.075, -0.067), (0.901, 0.907)),
+          "mlp1_r1": ((0.000, -0.001, 0.002), (0.002, 0.000, 0.004), (-0.001, 0.001), (0.981, 0.977)),
+          "mlp1_r4": ((-0.001, -0.004, 0.002), (-0.001, -0.003, 0.002), (-0.003, -0.002), (0.969, 0.964)),
+          "attn1": ((0.011, 0.007, 0.014), (0.010, 0.006, 0.014), (0.020, 0.020), (0.922, 0.916))}
+    for arm, (rlv, hc, dsr, agr) in T9.items():
+        for k, dom in enumerate(["RLV", "Healthcare"]):
+            row = pa.loc[(arm, dom)]
+            for col, want in zip(["dRel_mean_mean", "dRel_mean_ci_lo", "dRel_mean_ci_hi"], (rlv, hc)[k]):
+                chk(f"Table 9 {arm} {col.replace('_mean', '')} [{dom}]", float(f"{row[col]:.3f}") + 0.0, want, 1e-9)
+            chk(f"Table 9 {arm} dSR [{dom}]", float(f"{row.dSR_mean_mean:.3f}") + 0.0, dsr[k], 1e-9)
+            chk(f"Table 9 {arm} gate agreement [{dom}]", float(f"{row.Ag_agreement_vs_ref_mean:.3f}"), agr[k], 1e-9)
+    # ---- v1.3.6: seed spread against draw spread (Sec 3.3, Sec 3.13, Figure 14, Supplementary S2/S3/S4.1)
+    _s4 = pd.read_csv(D + "seeds400.csv"); _s4["comp"] = (_s4.a_triad * _s4.ts * _s4.sr * _s4.gc) ** 0.25
+    _cv = pd.read_csv(D + "seed_convergence.csv"); _cv = _cv[_cv.metric == "rel"]
+    _rm2 = pd.read_csv(M + "rel_multiseed.csv"); _rm2["comp"] = (_rm2.A_triad * _rm2.TS_mean * _rm2.SR_mean) ** 0.25
+    for dom, (sd_pe, ci5, dev5) in {"RLV": (0.0035, 0.0028, 0.0005), "Healthcare": (0.0033, 0.0033, 0.0010)}.items():
+        _x = _s4[_s4.domain == dom]; _c = _cv[_cv.domain == dom].set_index("n_seeds")
+        chk(f"Sec 3.3 seed SD over 400 seeds, per-event [{dom}]", _x.rel.std(ddof=1), sd_pe, 0.00005)
+        chk(f"Sec 3.3 draw SD, per-event route [{dom}]", rs.loc[dom, "Rel_mean_sd"], 0.016, 0.0005)
+        chk(f"Sec 3.3 draw SD, component route [{dom}]", _rm2[_rm2.domain == dom].comp.std(ddof=1), 0.012, 0.0005)
+        _r = [rs.loc[dom, "Rel_mean_sd"] / _x.rel.std(ddof=1), _rm2[_rm2.domain == dom].comp.std(ddof=1) / _x.comp.std(ddof=1)]
+        chk(f"Sec 3.3 draw/seed ratio within three to five [{dom}]", float(min(max(_r), 5) >= 3 and max(_r) <= 5 and min(_r) >= 3), 1.0, 0)
+        _dev = (_c["mean"] - _c.loc[400, "mean"]).abs()
+        chk(f"Sec 3.13 mean deviation at five seeds [{dom}]", _dev.loc[5], dev5, 0.00006)
+        chk(f"Sec 3.13 max mean deviation over subsets <= 0.0022 [{dom}]", float(_dev.max() <= 0.00225), 1.0, 0)
+        chk(f"Sec 3.13 interval at five seeds [{dom}]", _c.loc[5, "ci95"], ci5, 0.00006)
+        chk(f"Sec 3.13 interval at 400 seeds [{dom}]", _c.loc[400, "ci95"], 0.0003, 0.00006)
+except FileNotFoundError as e:
+    print("  SKIP  v1.3.0 checks (run generate_multiseed.py and the multiseed scripts first):", e); 
+print("ALL CHECKS PASSED" if ok else "SOME CHECKS FAILED"); sys.exit(0 if ok else 1)

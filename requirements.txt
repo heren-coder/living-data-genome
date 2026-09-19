@@ -1,8 +1,11 @@
-numpy>=1.24
-pandas>=2.0
-scipy>=1.10
-scikit-learn>=1.3
-matplotlib>=3.6
-pillow>=10.0
-dilithium-py>=1.0
-cryptography>=42.0
+# Environment that produced the published numbers (Python 3.12.13).
+# Other versions will usually run, but the verification step is only
+# guaranteed against these.
+numpy==2.4.4
+pandas==3.0.2
+scipy==1.17.1
+scikit-learn==1.8.0
+matplotlib==3.10.8
+pillow==12.3.0
+dilithium-py==1.4.0
+cryptography==50.0.0

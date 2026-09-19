@@ -2,8 +2,7 @@
 Living Data Genome -- Section 2.5.7 operationalization: context-mismatch
 (ectopic expression) screening.
 
-Uses infrastructure already built in Day 1-2 (context_label, pi_lookup.csv)
-that was deliberately included from the start for exactly this purpose.
+Uses the context labels and pi_lookup.csv written by generator.py.
 
   rho_{i,t}      = D(g_{i,t})            gene-dominance profile (simplex)
   Xi_{i,t}(c)    = JSD(rho, pi(c))       observed-vs-expected divergence

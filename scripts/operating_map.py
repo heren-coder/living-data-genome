@@ -4,16 +4,11 @@ import os as _os, sys as _sys
 _HERE = _os.path.dirname(_os.path.abspath(__file__))
 _sys.path.insert(0, _HERE)
 D = _os.path.join(_HERE, "..", "data") + _os.sep
-B = _os.path.join(_HERE, "..", "data") + _os.sep
-FIGDIR = _os.path.join(_HERE, "..", "figures") + _os.sep
 import itertools, numpy as np, pandas as pd
 from generator import RLV_CONFIG, HEALTHCARE_CONFIG, RNG_SEED
 from rel_computation import REL_WEIGHTS
 from day5_governance import tightened_bounds, is_admissible
 
-from generator import RLV_CONFIG, HEALTHCARE_CONFIG, RNG_SEED
-from rel_computation import REL_WEIGHTS
-from day5_governance import tightened_bounds, is_admissible
 df=pd.read_csv(D+"scenarios.csv"); rel=pd.read_csv(D+"rel_summary.csv").set_index("domain")
 CFG={"RLV":RLV_CONFIG,"Healthcare":HEALTHCARE_CONFIG}
 TIGHT=[0.025,0.05,0.075,0.10,0.125,0.15,0.175,0.20]
@@ -75,11 +70,11 @@ for dom,cfg in CFG.items():
                          rel_gap_mean=float(np.mean(gaps)),rel_gap_sd=float(np.std(gaps,ddof=1)),
                          kappa_mean=float(np.mean(kaps)),kappa_sd=float(np.std(kaps,ddof=1))))
 out=pd.DataFrame(rows); out.to_csv(D + "operating_map.csv",index=False)
-print("nokta:",len(out))
+print("points:",len(out))
 for dom in CFG:
     s=out[out.domain==dom]
-    print(f"\n== {dom} : Rel farki (satir=sikilastirma, sutun=degiskenlik %)")
+    print(f"\n== {dom} : Rel gap (rows = tightening, columns = variance %)")
     print(s.pivot(index="tightening",columns="variance_pct",values="rel_gap_mean").round(3).to_string())
-    print(f"-- kappa degisim katsayisi")
+    print(f"-- kappa coefficient of variation")
     p=s.copy(); p["cv"]=p.kappa_sd/p.kappa_mean
     print(p.pivot(index="tightening",columns="variance_pct",values="cv").round(2).to_string())

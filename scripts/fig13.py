@@ -31,8 +31,8 @@ a1.set_title("agreement declines, then scatters",
              fontsize=7.6,color="#0F2545",fontweight="bold",pad=8)
 
 a2.axhline(0.5,color=BK,linewidth=1.0,linestyle=(0,(4,3)))
-a2.text(3.4,0.42,"declared criterion:\nspread reaches half the mean",
-        fontsize=6.2,color=BK,va="top",linespacing=1.25)
+a2.text(2.0,1.55,"declared criterion:\nspread reaches\nhalf the mean",
+        fontsize=6.2,color=BK,va="top",ha="left",linespacing=1.25)
 a2.set_xlabel("inter-node calibration variance (%)",fontsize=7.2,color=BK)
 a2.set_ylabel("spread relative to the mean",fontsize=7.2,color=BK)
 a2.set_xlim(1,32); a2.set_ylim(0,1.6); a2.tick_params(labelsize=6.8,colors=BK)
@@ -51,7 +51,8 @@ for sp in ("top","right"): a3.spines[sp].set_visible(False)
 a3.spines['left'].set_color(BK); a3.spines['bottom'].set_color(BK)
 a3.set_title("and how\nstable it is",fontsize=7.0,color="#0F2545",fontweight="bold",pad=8,
              linespacing=1.2)
-fig.text(0.5,0.045,"twenty-five seeds per point; the boundary moves by less than half a point between five and twenty-five seeds",
+fig.text(0.5,0.018,"twenty-five seeds per point; the boundary moves by at most half a point between five and twenty-five seeds",
          ha="center",fontsize=6.6,color=BK,style="italic")
+fig.text(0.012,0.965,"(a)",fontsize=8.2,color="#000000",fontweight="bold",va="top")
 fig.savefig("Figure_13.png",facecolor="white")
 print("ok")

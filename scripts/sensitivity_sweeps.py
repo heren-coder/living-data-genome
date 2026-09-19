@@ -48,8 +48,9 @@ SEED = 42
 CONFIGS = {"RLV": RLV_CONFIG, "Healthcare": HEALTHCARE_CONFIG}
 OPERATING_DELTA = {"RLV": 0.33, "Healthcare": 0.31}
 
-# GC measured in the Section 3.4 governance demonstration (discard arm)
-GC_DISCARD = {"RLV": 0.717172, "Healthcare": 0.736041}
+# GC measured in the governance demonstration (discard arm), read from the file
+# written by day5_governance.py
+GC_DISCARD = pd.read_csv("../data/governance_demo_results.csv").set_index("domain").GC_discard.to_dict()
 
 
 def load() -> pd.DataFrame:

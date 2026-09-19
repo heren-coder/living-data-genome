@@ -1,3 +1,12 @@
+"""Schematic source of Figure 7.
+
+Draws the content and layout of the figure: the four columns, the layers and
+stages of each phase, the operators and the equations. The published Figure 7
+(figures/Figure_7_original_600dpi.png) is an illustrated rendering of this
+schematic, drawn by hand with the same labels; it is the one element of the
+article, together with the graphical abstract, that the pipeline does not
+generate. Output: Figure_7_schematic.png in this directory.
+"""
 import matplotlib; matplotlib.use("Agg")
 import numpy as np, matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch, Circle, Rectangle, Wedge, Polygon
@@ -172,7 +181,7 @@ arrow(143.5,111,148.5,111,c=INK,lw=2.0,ms=11)
 # ---------------- panel 4 ----------------
 P4=(150,181.6); box(P4[0],P4[1],62,160,FRAME,lw=0.9)
 numtag(P4[0]+3.6,157.6,4,PUR)
-ax.text(168.5,158.0,"Reliability",ha="center",fontsize=7.0,color=PUR,fontweight="bold")
+ax.text(168.9,158.0,"Protocol reliability",ha="center",fontsize=6.0,color=PUR,fontweight="bold")
 ax.text(168.5,154.8,"four components",ha="center",fontsize=5.8,color=BK,style="italic")
 COMP=[("triadic alignment",INK,r"$\Psi_{ER} \leftrightarrow \Psi_{DG} \leftrightarrow \Psi_{Case}$",
        "three views must agree",148.0),
@@ -206,7 +215,7 @@ BAND=[(3,45,"SUPERVISORY PHASE","layers L1\u2013L2  ·  stages S1\u2013S6",
        r"$R \rightarrow \tilde{R},\ \mathrm{Lin}(R)$",
        r"$\Lambda$: accept, certify, contest, revoke, regenerate",
        "agreement · apoptosis · memory · regeneration",INK),
-      (150,181.6,"RELIABILITY","measured across L1\u2013L4",
+      (150,181.6,"PROTOCOL RELIABILITY","measured across L1\u2013L4",
        r"$\mathrm{Rel}=A^{w_A} TS^{w_{TS}} SR^{w_{SR}} GC^{w_{GC}}$",
        "weakest-link aggregation",
        "no layer certifies alone",PUR)]
@@ -254,5 +263,5 @@ for k,(sy,tx) in enumerate(NOT2):
     y=9.6-k*2.2
     ax.text(139,y,sy,ha="left",va="center",fontsize=5.8,color=BK)
     ax.text(150,y,": "+tx,ha="left",va="center",fontsize=5.2,color=BK)
-fig.savefig("Figure_7.png",facecolor="white")
+fig.savefig("Figure_7_schematic.png",facecolor="white")
 print("ok")

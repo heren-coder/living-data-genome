@@ -23,7 +23,7 @@ placeholder. This script adds two lightweight, honestly-scoped tests:
 
 Both are explicitly disclosed as simulated / lightweight instantiations
 (no real multi-party network, no real PKI) -- consistent with the
-simplification already declared in the decision log -- but they are no
+simplifications declared in the manuscript -- but they are no
 longer placeholders: they produce real, checkable numbers.
 """
 

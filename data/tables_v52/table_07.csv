@@ -1,0 +1,12 @@
+Route,RLV,Healthcare
+Proceed,71.0%,71.4%
+Context review,1.8%,2.4%
+Quarantine or repair,14.0%,11.4%
+Inadmissible,13.2%,14.9%
+Context-repair outcome for quarantined candidates,,
+Quarantined candidates,130,101
+Divergence before repair,0.0444,0.0418
+Divergence after repair,0.0134,0.0124
+Divergence reduction,69.9%,70.3%
+Resolved below the tolerance,100%,100%
+Remains within the feasibility gate,100%,100%

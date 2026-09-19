@@ -6,13 +6,13 @@ RLV,GC=1 (main results),admissibility_first,0.15,0.15,0.55,0.15,0.86938034612990
 RLV,GC=1 (main results),governance_first,0.15,0.15,0.15,0.55,0.9191480667690098
 RLV,GC=1 (main results),release_facing,0.3,0.1,0.3,0.3,0.8595928749754387
 RLV,GC=1 (main results),supervisory_facing,0.3,0.3,0.3,0.1,0.8448331686452083
-RLV,"GC measured, discard arm",neutral,0.25,0.25,0.25,0.25,0.7996162809115857
-RLV,"GC measured, discard arm",alignment_first,0.55,0.15,0.15,0.15,0.7643805252317184
-RLV,"GC measured, discard arm",stability_first,0.15,0.55,0.15,0.15,0.8446665098185421
-RLV,"GC measured, discard arm",admissibility_first,0.15,0.15,0.55,0.15,0.82709104135328
-RLV,"GC measured, discard arm",governance_first,0.15,0.15,0.15,0.55,0.7655583664311193
-RLV,"GC measured, discard arm",release_facing,0.3,0.1,0.3,0.3,0.7780003720163053
-RLV,"GC measured, discard arm",supervisory_facing,0.3,0.3,0.3,0.1,0.8172092781267034
+RLV,"GC measured, discard arm",neutral,0.25,0.25,0.25,0.25,0.7996162020761971
+RLV,"GC measured, discard arm",alignment_first,0.55,0.15,0.15,0.15,0.7643804800148525
+RLV,"GC measured, discard arm",stability_first,0.15,0.55,0.15,0.15,0.8446664598523654
+RLV,"GC measured, discard arm",admissibility_first,0.15,0.15,0.55,0.15,0.8270909924267787
+RLV,"GC measured, discard arm",governance_first,0.15,0.15,0.15,0.55,0.7655582003804821
+RLV,"GC measured, discard arm",release_facing,0.3,0.1,0.3,0.3,0.7780002799712145
+RLV,"GC measured, discard arm",supervisory_facing,0.3,0.3,0.3,0.1,0.8172092458987388
 Healthcare,GC=1 (main results),neutral,0.25,0.25,0.25,0.25,0.8767271543229602
 Healthcare,GC=1 (main results),alignment_first,0.55,0.15,0.15,0.15,0.8273006086735815
 Healthcare,GC=1 (main results),stability_first,0.15,0.55,0.15,0.15,0.8927768411515062
@@ -20,10 +20,10 @@ Healthcare,GC=1 (main results),admissibility_first,0.15,0.15,0.55,0.15,0.8656311
 Healthcare,GC=1 (main results),governance_first,0.15,0.15,0.15,0.55,0.9240993712138337
 Healthcare,GC=1 (main results),release_facing,0.3,0.1,0.3,0.3,0.8688108358587603
 Healthcare,GC=1 (main results),supervisory_facing,0.3,0.3,0.3,0.1,0.8539596478778028
-Healthcare,"GC measured, discard arm",neutral,0.25,0.25,0.25,0.25,0.812063441981955
-Healthcare,"GC measured, discard arm",alignment_first,0.55,0.15,0.15,0.15,0.790130169683078
-Healthcare,"GC measured, discard arm",stability_first,0.15,0.55,0.15,0.15,0.8526645690726037
-Healthcare,"GC measured, discard arm",admissibility_first,0.15,0.15,0.55,0.15,0.8267385673930905
-Healthcare,"GC measured, discard arm",governance_first,0.15,0.15,0.15,0.55,0.7807550076638123
-Healthcare,"GC measured, discard arm",release_facing,0.3,0.1,0.3,0.3,0.7924937226154481
-Healthcare,"GC measured, discard arm",supervisory_facing,0.3,0.3,0.3,0.1,0.8281853619460326
+Healthcare,"GC measured, discard arm",neutral,0.25,0.25,0.25,0.25,0.8120633341735684
+Healthcare,"GC measured, discard arm",alignment_first,0.55,0.15,0.15,0.15,0.7901301067451424
+Healthcare,"GC measured, discard arm",stability_first,0.15,0.55,0.15,0.15,0.8526645011534812
+Healthcare,"GC measured, discard arm",admissibility_first,0.15,0.15,0.55,0.15,0.8267385015391076
+Healthcare,"GC measured, discard arm",governance_first,0.15,0.15,0.15,0.55,0.7807547796295988
+Healthcare,"GC measured, discard arm",release_facing,0.3,0.1,0.3,0.3,0.7924935963630436
+Healthcare,"GC measured, discard arm",supervisory_facing,0.3,0.3,0.3,0.1,0.8281853179665469

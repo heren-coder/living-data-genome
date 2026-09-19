@@ -16,7 +16,7 @@ for dom,ls in [("RLV","-"),("Healthcare","--")]:
     ax1.plot(s.xi,s.quarantine_repair,color=ACC,linestyle=ls,linewidth=1.4)
     ax2.plot(s.xi,s.context_review*100,color=PUR,linestyle=ls,linewidth=1.4,marker="o",markersize=2.6)
 ax1.axvline(0.030,color=BK,linewidth=0.9,linestyle=(0,(3,2)))
-ax1.text(0.031,0.92,"declared",fontsize=6.2,color=BK)
+ax1.text(0.032,0.50,"declared",fontsize=6.2,color=BK)
 ax1.text(0.052,0.72,"proceed",fontsize=6.6,color=GRN)
 ax1.text(0.042,0.16,"quarantine\nor repair",fontsize=6.6,color=ACC,linespacing=1.2)
 ax1.set_xlabel("mismatch tolerance",fontsize=7.0,color=BK)
@@ -60,5 +60,6 @@ for a in (ax1,ax2,ax3,ax4):
     a.spines['left'].set_color(BK); a.spines['bottom'].set_color(BK)
 fig.text(0.5,0.045,"solid lines are the red-light violation configuration, dashed the healthcare vignette; declared operating points are marked in every panel",
          ha="center",fontsize=6.4,color=BK,style="italic")
+fig.text(0.012,0.965,"(b)",fontsize=8.2,color="#000000",fontweight="bold",va="top")
 fig.savefig("Figure_14.png",facecolor="white")
 print("ok")

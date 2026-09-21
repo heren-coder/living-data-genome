@@ -1,3 +1,18 @@
+## v1.3.7 — minor revision of the manuscript, September 2026
+
+- New scripts/quantum_coherence.py writes data/quantum_coherence.csv: the density-matrix reading of the
+  cross-layer similarity matrix (unit trace, positive semidefinite), its l1-norm of coherence and the
+  normalization that equals the arithmetic mean of the three alignments, next to level and balance, for
+  both configurations (0.717 / 0.755) and for the two illustrative triples of Section 2.8. run_all.sh runs
+  it after rel_computation.py.
+- verify_paper_numbers.py: eighteen checks for the above. 272 checks in total.
+- data/tables_v52/table_03.csv: the governance-coherence row carries the manuscript's label, naming the
+  discard arm and its single-pass revoke rate. No value changed.
+- README: version, check count and the row for the new script.
+
+No other script, data file, table or figure changed.
+
+
 ## v1.3.6 — version of the revised manuscript, September 2026
 
 Versions 1.3.0 to 1.3.5 below were internal steps of the revision; they are released

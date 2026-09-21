@@ -2,7 +2,7 @@
 
 Code and data for *The Living Data Genome: Ledger-Governed Evidence Lifecycles for
 Accountable AI under Limited Observability* (H. Eren, submitted to *Systems*, MDPI).
-Version 1.3.6 is the version reported in the revised manuscript. It is archived on
+Version 1.3.7 is the version reported in the revised manuscript. It is archived on
 Zenodo under the concept DOI [10.5281/zenodo.21862909](https://doi.org/10.5281/zenodo.21862909),
 which always resolves to the latest version and lists the version DOIs.
 
@@ -29,7 +29,7 @@ the package can be unpacked anywhere, and runs the whole sequence in dependency
 order: generation, the reliability protocol, ablations, governance, federation and
 ledger, context screening, release gate and attribution, protocol sensitivity, the
 uncertainty analysis over fifty generator draws, tables, figures, and finally
-`verify_paper_numbers.py`. The verification performs 254 checks against the values
+`verify_paper_numbers.py`. The verification performs 272 checks against the values
 printed in the manuscript and exits non-zero if any fails; a run that ends with
 `ALL CHECKS PASSED` has reproduced the paper. One check, the post-quantum signing
 ratio of Supplementary S7.1, is an order of magnitude rather than a value, because
@@ -91,6 +91,7 @@ write into `scripts/` (or directly into `figures/`); `run_all.sh` moves them to
 | Table 7 | `actx_routing.py` | `tables_v52/table_07.csv` |
 | Table 8 | `sensitivity_sweeps.py` | `tables_v52/table_09.csv` |
 | Table 9 | `proxy_architecture_sweep.py` | `tables_v52/table_10.csv` |
+| Section 2.8, Section 3.2 (density-matrix reading, normalized l1 coherence) | `quantum_coherence.py` | `quantum_coherence.csv` |
 | Figures 1–6 | `fig1.py`, `fig2.py`, `fig3.py`, `fig4b.py`, `fig5.py`, `fig6c.py` | schematics, no data |
 | Figure 7 | drawn; schematic source `fig7.py` | — |
 | Figures 8, 9 | `fig8.py`, `fig9.py` | `scenarios.csv` |

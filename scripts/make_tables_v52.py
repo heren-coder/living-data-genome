@@ -42,7 +42,7 @@ for lab, c in [("Triadic alignment", "A_triad"),
                ("Transition stability, mutation to repair", "TS_mutation_to_repair_mean"),
                ("Admissibility survival, repair stage", "SR_mean")]:
     row(lab, r3(rel.loc["RLV", c]), r3(rel.loc["Healthcare", c]))
-row("Governance coherence, measured in Section 3.6", r3(gd.loc["RLV", "GC_discard"]), r3(gd.loc["Healthcare", "GC_discard"]))
+row("Governance coherence, discard arm of Section 3.6 (one minus the single-pass revoke rate)", r3(gd.loc["RLV", "GC_discard"]), r3(gd.loc["Healthcare", "GC_discard"]))
 row("Aggregate", "", "")
 # Single-file aggregate rows on the component route (weighted geometric mean of the
 # pool component means), the same route as the measured row and the 50-draw rows.

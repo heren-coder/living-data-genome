@@ -266,6 +266,19 @@ try:
         chk(f"Sec 3.13 max mean deviation over subsets <= 0.0022 [{dom}]", float(_dev.max() <= 0.00225), 1.0, 0)
         chk(f"Sec 3.13 interval at five seeds [{dom}]", _c.loc[5, "ci95"], ci5, 0.00006)
         chk(f"Sec 3.13 interval at 400 seeds [{dom}]", _c.loc[400, "ci95"], 0.0003, 0.00006)
+    # ---- v1.3.7: density-matrix reading of the cross-layer matrix (Section 2.8, Section 3.2)
+    qc = pd.read_csv(D + "quantum_coherence.csv").set_index("case")
+    for case in qc.index:
+        chk(f"Sec 2.8 unit trace [{case}]", qc.loc[case, "trace"], 1.0, 1e-9)
+    for dom, l1n in {"RLV": 0.717, "Healthcare": 0.755}.items():
+        chk(f"Sec 2.8 positive semidefinite [{dom}]", float(qc.loc[dom, "min_eigenvalue"] >= 0), 1.0, 0)
+        chk(f"Sec 3.2 normalized l1 coherence [{dom}]", qc.loc[dom, "l1_normalized"], l1n, 0.0005)
+        chk(f"Sec 3.2 l1 coherence above level [{dom}]", float(qc.loc[dom, "l1_normalized"] > qc.loc[dom, "level"]), 1.0, 0)
+    for case, (lev, bal) in {"example: even": (0.72, 1.00), "example: one pair weaker": (0.71, 0.70)}.items():
+        chk(f"Sec 2.8 example PSD [{case}]", float(qc.loc[case, "min_eigenvalue"] >= 0), 1.0, 0)
+        chk(f"Sec 2.8 example normalized coherence [{case}]", qc.loc[case, "l1_normalized"], 0.72, 0.0005)
+        chk(f"Sec 2.8 example level [{case}]", qc.loc[case, "level"], lev, 0.005)
+        chk(f"Sec 2.8 example balance [{case}]", qc.loc[case, "balance"], bal, 0.005)
 except FileNotFoundError as e:
     print("  SKIP  v1.3.0 checks (run generate_multiseed.py and the multiseed scripts first):", e); 
 print("ALL CHECKS PASSED" if ok else "SOME CHECKS FAILED"); sys.exit(0 if ok else 1)

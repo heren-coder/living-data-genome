@@ -11,6 +11,7 @@ python3 record_env.py
 echo "== generation and reliability =="
 python3 generator.py
 python3 rel_computation.py
+python3 quantum_coherence.py
 
 echo "== ablations =="
 python3 day5_ablation.py

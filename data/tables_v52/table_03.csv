@@ -4,7 +4,7 @@ Triadic alignment,0.714,0.758
 "Transition stability, genesis to mutation",0.879,0.880
 "Transition stability, mutation to repair",0.955,0.955
 "Admissibility survival, repair stage",0.870,0.849
-"Governance coherence, measured in Section 3.6",0.717,0.736
+"Governance coherence, discard arm of Section 3.6 (one minus the single-pass revoke rate)",0.717,0.736
 Aggregate,,
 "Reliability, measured governance coherence",0.800,0.812
 "Reliability, idealized lineage",0.869,0.877

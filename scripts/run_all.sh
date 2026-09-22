@@ -54,6 +54,7 @@ python3 run_sweep_coh_thresholds.py
 python3 run_repair_geometry.py
 python3 validity_arms.py
 python3 rel_seed_robustness.py
+python3 estimator_checks.py
 python3 run_seed_convergence.py
 
 echo "== generator-level uncertainty (v1.3.0) =="

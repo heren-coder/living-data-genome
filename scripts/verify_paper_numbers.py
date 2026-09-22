@@ -279,6 +279,15 @@ try:
         chk(f"Sec 2.8 example normalized coherence [{case}]", qc.loc[case, "l1_normalized"], 0.72, 0.0005)
         chk(f"Sec 2.8 example level [{case}]", qc.loc[case, "level"], lev, 0.005)
         chk(f"Sec 2.8 example balance [{case}]", qc.loc[case, "balance"], bal, 0.005)
+    # ---- v1.3.8: estimators of Tables 3 and 4 and of the stability term (Table 4 note, Section 3.2)
+    ec = pd.read_csv(D + "estimator_checks.csv").set_index("domain")
+    for dom, (single, sd) in {"RLV": (0.714, 0.002), "Healthcare": (0.758, 0.008)}.items():
+        chk(f"Table 4 note first seed reproduces single pass [{dom}]",
+            abs(ec.loc[dom, "A_triad_first_seed"] - ec.loc[dom, "A_triad_single_pass"]), 0.0, 1e-12)
+        chk(f"Table 4 note single-pass alignment [{dom}]", ec.loc[dom, "A_triad_single_pass"], single, 0.0005)
+        chk(f"Table 4 note alignment SD across seeds [{dom}]", ec.loc[dom, "A_triad_five_seed_sd"], sd, 0.0005)
+        chk(f"Sec 3.2 arithmetic stability term [{dom}]", ec.loc[dom, "TS_arithmetic"], 0.917, 0.0005)
+        chk(f"Sec 3.2 geometric stability term [{dom}]", ec.loc[dom, "TS_geometric"], 0.915, 0.0005)
 except FileNotFoundError as e:
     print("  SKIP  v1.3.0 checks (run generate_multiseed.py and the multiseed scripts first):", e); 
 print("ALL CHECKS PASSED" if ok else "SOME CHECKS FAILED"); sys.exit(0 if ok else 1)

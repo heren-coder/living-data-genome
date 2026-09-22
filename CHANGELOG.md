@@ -1,3 +1,16 @@
+## v1.3.8 — minor revision of the manuscript (estimator notes), September 2026
+
+- New scripts/estimator_checks.py writes data/estimator_checks.csv: the triadic alignment of the single pass
+  (Table 3) against the first of the five evaluation seeds, which reproduces it, and their five-seed mean and
+  standard deviation (Table 4 headings; 0.002 and 0.008); and the stability term of Equation (2.11) as the
+  arithmetic mean of the two governed transitions (0.917) against their geometric mean (0.915). run_all.sh
+  runs it after rel_seed_robustness.py.
+- verify_paper_numbers.py: ten checks for the above. 282 checks in total.
+- README: version, check count and the row for the new script.
+
+No other script, data file, table or figure changed.
+
+
 ## v1.3.7 — minor revision of the manuscript, September 2026
 
 - New scripts/quantum_coherence.py writes data/quantum_coherence.csv: the density-matrix reading of the

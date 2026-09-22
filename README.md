@@ -2,7 +2,7 @@
 
 Code and data for *The Living Data Genome: Ledger-Governed Evidence Lifecycles for
 Accountable AI under Limited Observability* (H. Eren, submitted to *Systems*, MDPI).
-Version 1.3.8 is the version reported in the revised manuscript. It is archived on
+Version 1.3.9 is the version reported in the revised manuscript. It is archived on
 Zenodo under the concept DOI [10.5281/zenodo.21862909](https://doi.org/10.5281/zenodo.21862909),
 which always resolves to the latest version and lists the version DOIs.
 
@@ -117,7 +117,7 @@ write into `scripts/` (or directly into `figures/`); `run_all.sh` moves them to
 | Table S2.8 | `ledger_cost.py` | `tables_v52/S2_8.csv` |
 | Tables S3.1–S3.4 | declared (S3.4: `generator.py` writes the profiles to `pi_lookup.csv`) | — |
 | Tables S4.1–S4.7b | `rel_multiseed.py`, `governance_federated_multiseed.py`, `sr_floor_sweep.py`, `xi_calibration_split.py`, `attribution_matched_reference.py` | `tables_v52/S4_*.csv` |
-| Table S9.1 | `day6_ectopic_mislabel.py` | `tables_v52/table_08.csv` |
+| Table S8.1 | `day6_ectopic_mislabel.py` | `tables_v52/table_08.csv` |
 | Figure S2.1 | `fig15.py` | `misrouting_saturation.csv`, `seed_convergence.csv` |
 | Figure S7.1 | `fig17.py` | `sweep_delta.csv` |
 | Figure S7.2 | `fig18.py` | `sweep_eps.csv`, `sweep_sTS.csv` |
@@ -136,13 +136,13 @@ submitted version. The map to the revised manuscript:
 
 | Object | Submitted version | Revised manuscript |
 |---|---|---|
-| Tables | 1 (design contract), 2 (layers), 3 (vocabulary), 4 (dominance profiles), 5 (Rel components), 6 (ablation), 7 (governance), 8 (federated/ledger), 9 (PQ signature), 10 (routing), 11 (context repair), 12 (corruption), 13 (weightings) | new Table 1 (mechanisms × operations); 1 → 2 (navigation columns → Table S3.1b); 2 → S3.2; 3 → S3.3; 4 → S3.4; 5 → 3; 6 → 4; 7 → 5; 8 → 6 (ledger-cost block → S2.8); 9 → S2.7; 10 + 11 → 7; 12 → S9.1 (misrouting block → S2.3b); 13 → 8; new Table 9 (proxy architecture) |
+| Tables | 1 (design contract), 2 (layers), 3 (vocabulary), 4 (dominance profiles), 5 (Rel components), 6 (ablation), 7 (governance), 8 (federated/ledger), 9 (PQ signature), 10 (routing), 11 (context repair), 12 (corruption), 13 (weightings) | new Table 1 (mechanisms × operations); 1 → 2 (navigation columns → Table S3.1b); 2 → S3.2; 3 → S3.3; 4 → S3.4; 5 → 3; 6 → 4; 7 → 5; 8 → 6 (ledger-cost block → S2.8); 9 → S2.7; 10 + 11 → 7; 12 → S8.1 (misrouting block → S2.3b); 13 → 8; new Table 9 (proxy architecture) |
 | Figures | 1–18 | 1–10 unchanged; 11 + 12 → Figure 11(a)(b); 13 + 14 → Figure 12(a)(b); 15 → S2.1; 16 → 13; 17 → S7.1; 18 → S7.2; new Figure 14 |
 | Equations | (2.1)–(2.26) | (2.2), (2.7), (2.11)–(2.14), (2.21)–(2.23) → Supplementary (A15)–(A23); the rest renumbered (2.1)–(2.17) in order |
-| Sections | 3.7.1, 3.8.1, 3.9, 3.10, 3.11, Appendices A–B | 3.7.1 → S7.1; the sweeps of 3.11 → S7.2; 3.8.1 → S9; the reversal analysis of 3.9 → S8; the permutation analysis of 3.10 → S10; Appendices → S5–S6; new 3.12 (proxy architecture); 3.12 → 3.13 (reproducibility) |
+| Sections | 3.7.1, 3.8.1, 3.9, 3.10, 3.11, Appendices A–B | 3.7.1 → S7.1; the sweeps of 3.11 → S7.2; 3.8.1 → S8; the reversal analysis of 3.9 → S9; the permutation analysis of 3.10 → S10; Appendices → S5–S6; new 3.12 (proxy architecture); 3.12 → 3.13 (reproducibility) |
 
 The file names under `data/tables_v52/` keep the numbering of the first revised
-draft: `table_03`–`table_07` are Tables 3–7, `table_08` is Table S9.1, `table_09` is
+draft: `table_03`–`table_07` are Tables 3–7, `table_08` is Table S8.1, `table_09` is
 Table 8 and `table_10` is Table 9.
 
 ## Scope

@@ -1,3 +1,11 @@
+## v1.3.9 — Supplementary sections follow the order of the main text, September 2026
+
+No script, data file, table, figure or number changed. README only:
+- Supplementary S8 and S9 exchange places in the manuscript so that they follow Sections 3.8 and 3.9: the
+  context-corruption experiment is now Supplementary S8 with Table S8.1, and the reversal analysis of
+  Section 3.9 is S9. The table map, the section map and the note on data/tables_v52/table_08.csv are updated.
+- README version and CITATION.cff version 1.3.9.
+
 ## v1.3.8 — minor revision of the manuscript (estimator notes), September 2026
 
 - New scripts/estimator_checks.py writes data/estimator_checks.csv: the triadic alignment of the single pass

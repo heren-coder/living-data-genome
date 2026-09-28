@@ -28,7 +28,7 @@ for ax,dom in zip(axes,["RLV","Healthcare"]):
         ax.scatter([dv],[y],s=64,marker="o",facecolors=col,edgecolors=col,
                    linewidths=1.4,zorder=4)
         ha,ox = ("right",-10) if dv<0 else ("left",10)
-        ax.annotate(("0.000" if dv==0 else f"{dv:+.3f}"),(dv,y),textcoords="offset points",xytext=(ox,0),
+        ax.annotate(("0.000" if dv==0 else f"{dv:+.3f}".replace("-", "\u2212")),(dv,y),textcoords="offset points",xytext=(ox,0),   # eksi isareti (MDPI proof)
                     ha=ha,va="center",fontsize=6.2,color=col)
     ax.annotate(f"undamaged {base:.3f}",(0,len(ARMS)-0.55),
                 textcoords="offset points",xytext=(0,2),

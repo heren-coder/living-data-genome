@@ -1,3 +1,14 @@
+## v1.3.10 — typographic corrections to two figures at proofing, September 2026
+
+No number, table or data file changed. Figures only, following the production queries on the proof:
+- fig11.py and fig16.py write the data labels with a true minus sign (U+2212) instead of a hyphen, as the
+  axis ticks already did (manuscript Figures 11 and 13).
+- fig11.py: the label of the access-escalation point in the healthcare panel is centred under its marker; it
+  had been placed to the left, where it crossed the axis (manuscript Figure 11).
+- figures/Figure_7_original_600dpi.png: the dashed connector from the signed evidence package to the ledger
+  and lineage block is drawn in black, the colour its legend entry ("lineage record") declares; it had been
+  drawn in the dark blue used for attestation and review. Only that connector changed.
+
 ## v1.3.9 — Supplementary sections follow the order of the main text, September 2026
 
 No script, data file, table, figure or number changed. README only:

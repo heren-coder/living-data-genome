@@ -2,7 +2,7 @@
 
 Code and data for *The Living Data Genome: Ledger-Governed Evidence Lifecycles for
 Accountable AI under Limited Observability* (H. Eren, submitted to *Systems*, MDPI).
-Version 1.3.9 is the version reported in the revised manuscript. It is archived on
+Version 1.3.10 is the version reported in the revised manuscript. It is archived on
 Zenodo under the concept DOI [10.5281/zenodo.21862909](https://doi.org/10.5281/zenodo.21862909),
 which always resolves to the latest version and lists the version DOIs.
 

@@ -12,7 +12,7 @@ NAME={"RLV":{"S":"Speed","A":"Attention","D":"Density","E":"Environment"},
       "Healthcare":{"S":"Access escalation","A":"Audit coverage",
                     "D":"Record density","E":"Access control"}}
 OFF={"RLV":{"D":(10,4,"left"),"S":(-8,-16,"right"),"A":(10,2,"left"),"E":(2,-18,"center")},
-     "Healthcare":{"S":(-8,-16,"right"),"A":(-8,-16,"right"),"D":(10,-6,"left"),"E":(10,4,"left")}}
+     "Healthcare":{"S":(0,-18,"center"),"A":(-8,-16,"right"),"D":(10,-6,"left"),"E":(10,4,"left")}}
 MM=1/25.4
 fig=plt.figure(figsize=(184.6*MM,67.9*MM),dpi=600)
 axes=[fig.add_axes([0.085,0.200,0.375,0.560]),fig.add_axes([0.585,0.200,0.375,0.560])]
@@ -25,7 +25,7 @@ for ax,dom in zip(axes,["RLV","Healthcare"]):
                       (sg.metric=="A_triad")].holm_significant.iloc[0])
         ax.scatter([dA],[dS],s=64,marker="o",zorder=4,
                    facecolors=(col if sig else "none"),edgecolors=col,linewidths=1.4)
-        lab=f"{NAME[dom][r.gene_dropped]}\n\u0394Rel {dR:+.3f}"
+        lab=f"{NAME[dom][r.gene_dropped]}\n\u0394Rel {dR:+.3f}".replace("-", "\u2212")   # eksi isareti (MDPI proof)
         ox,oy,ha=OFF[dom][r.gene_dropped]
         ax.annotate(lab,(dA,dS),textcoords="offset points",xytext=(ox,oy),
                     ha=ha,fontsize=6.4,color=col,linespacing=1.2)
